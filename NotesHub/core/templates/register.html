@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block start %}
+
+{% comment %} <div class="container mt-5">
+    <form class="col-6 mx-auto card p-4" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Register</h2>
+        {% if messages %}
+        <div class="alert alert-primary" role="alert">
+            {% for message in messages %}
+                {% if message.tags %}
+                    {{ message }}
+                {% endif %}
+            {% endfor %}
+        </div>
+            
+        
+        {% endif %}
+        <div class="mb-3">
+            <label for="InputUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="InputUsername" name="username">
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="InputFirstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="InputFirstName" name="firstName">
+            </div>
+            <div class="col">
+                <label for="InputLastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="InputLastName" name="lastName">
+            </div>
+        </div>
+        <div class="mb-3">
+          <label for="InputEmail" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="InputEmail" name="email">
+          <div id="emailHelp" class="form-text">Enter your iitb email address</div>
+        </div>
+        <div class="mb-3">
+          <label for="InputPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="InputPassword" name="password">
+        </div>
+        <p>
+            Already have an account?
+            <a href="/login">Login here</a>
+        </p>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div> {% endcomment %}
+
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-4" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Register</h2>
+        
+        {% if messages %}
+        <div class="alert alert-primary" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {{ form.as_p }}
+
+        <p>
+            Already have an account?
+            <a href="/core/login">Login here</a>
+        </p>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block start %}
+
+<div class="container mt-5">
+    <form class="col-6 mx-auto card p-4" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Register</h2>
+        
+        {% if messages %}
+        <div class="alert alert-primary" role="alert">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {{ form.as_p }}
+
+        <p>
+            Already have an account?
+            <a href="{% url 'login' %}">Login here</a>
+        </p>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+
+{% endblock %}

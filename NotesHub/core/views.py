@@ -23,7 +23,7 @@ def registerView(request):
             user.save()
             print(user)
             messages.success(request, "Registration successful.")
-            return redirect('/core/login')  # Replace 'login' with the name of your login view
+            return redirect('login')  # Replace 'login' with the name of your login view
         
         else:
             messages.error(request, "Please correct the errors below.")
@@ -45,7 +45,7 @@ def loginView(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Logged in successfully.")
-                return redirect('/core')  
+                return redirect('index')  
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -59,4 +59,4 @@ def loginView(request):
 def logoutView(request):
     logout(request)
     messages.success(request, "Logged out successfully.")
-    return redirect('/core/login')
+    return redirect('login')

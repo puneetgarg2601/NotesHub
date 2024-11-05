@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
-
+from .models import Notes, Course
 
 class RegisterForm(forms.Form):
     username = forms.CharField(
@@ -57,4 +57,31 @@ class LoginForm(forms.Form):
         required=True,
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
         label='Password'
+    )
+
+class CreateNoteForm(forms.Form):
+    title = forms.CharField(
+        max_length=200,
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter title'
+        })
+    )
+    description = forms.CharField(
+        required=True,
+        widget=forms.Textarea(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter description',
+            'rows': 5
+        })
+    )
+    file = forms.FileField(
+        required=True,
+        widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
+    )
+    course_code = forms.ModelChoiceField(
+        queryset=Course.objects.all(),
+        required=True,
+        widget=forms.Select(attrs={'class': 'form-control'})
     )

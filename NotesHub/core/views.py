@@ -60,3 +60,8 @@ def logoutView(request):
     logout(request)
     messages.success(request, "Logged out successfully.")
     return redirect('login')
+
+def createNoteView(request):
+    form = CreateNoteForm()
+    courses = ['CS 744', 'CS 725', 'CS 626', 'CS 601', 'CS 755']
+    return render(request, 'create_note.html', {'form': form, 'courses': courses})

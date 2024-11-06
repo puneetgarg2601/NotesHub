@@ -14,6 +14,11 @@ class Course(models.Model):
         blank=False,
         verbose_name="Course Name"
     )
+    short_name = models.CharField(
+        max_length=16,
+        blank=False,
+        verbose_name="Short Name"
+    )
 
     def save(self, *args, **kwargs):
         self.course_code = self.course_code.upper()

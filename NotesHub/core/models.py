@@ -47,6 +47,7 @@ class Notes(models.Model):
     view_count = models.IntegerField(default=0)
     total_time_spent = models.IntegerField(default=0)
     downloaded_times = models.IntegerField(default=0)
+    bookmark_count = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title

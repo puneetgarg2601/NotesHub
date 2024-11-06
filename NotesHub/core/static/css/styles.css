@@ -1,0 +1,46 @@
+.card {
+    position: relative; /* Position relative for the overlay */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis;
+    padding-bottom: 15px;
+}
+.card-title {
+    overflow: hidden; /* Hide overflow */
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.5); /* Light black overlay */
+    transform: translateY(100%); /* Start from bottom */
+    transition: transform 0.5s; /* Transition effect */
+}
+
+.card:hover .overlay {
+    transform: translateY(0); /* Move overlay to top on hover */
+}
+
+.card-body {
+    position: relative; /* Make the card body relative for overlay */
+    z-index: 1; /* Ensure text is above the overlay */
+    overflow: hidden;
+    
+}
+.card-body p{
+    position: relative;
+    color: grey;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 20px;
+}
+.margin-bottom{
+    margin-top: -12px;
+}
+
+
+
+
+

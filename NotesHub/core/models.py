@@ -20,6 +20,12 @@ class Course(models.Model):
         verbose_name="Short Name"
     )
 
+    description = models.CharField(
+        max_length=256,
+        blank=False,
+        verbose_name="Course Description"
+    )
+
     def save(self, *args, **kwargs):
         self.course_code = self.course_code.upper()
         super(Course, self).save(*args, **kwargs)

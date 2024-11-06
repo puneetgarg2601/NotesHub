@@ -14,6 +14,11 @@ class Course(models.Model):
         blank=False,
         verbose_name="Course Name"
     )
+    short_name = models.CharField(
+        max_length=16,
+        blank=False,
+        verbose_name="Short Name"
+    )
 
     def save(self, *args, **kwargs):
         self.course_code = self.course_code.upper()
@@ -31,6 +36,7 @@ class Notes(models.Model):
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
     download_url = models.CharField(max_length=500)
+    preview_url = models.CharField(max_length=500)
     thumbnail_url = models.CharField(max_length=500)
     view_count = models.IntegerField(default=0)
     total_time_spent = models.IntegerField(default=0)

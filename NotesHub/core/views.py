@@ -8,7 +8,7 @@ from .utils import *
 import os
 
 def index(request):
-    return render(request, 'base.html')
+    return render(request, 'home.html')
 
 def registerView(request):
     if request.method == 'POST':
@@ -111,3 +111,4 @@ def createNoteView(request):
         form = CreateNoteForm()
 
     return render(request, 'create_note.html', {'form': form})
+

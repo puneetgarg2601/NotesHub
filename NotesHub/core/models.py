@@ -31,6 +31,7 @@ class Notes(models.Model):
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
     download_url = models.CharField(max_length=500)
+    preview_url = models.CharField(max_length=500)
     thumbnail_url = models.CharField(max_length=500)
     view_count = models.IntegerField(default=0)
     total_time_spent = models.IntegerField(default=0)

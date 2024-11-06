@@ -81,7 +81,7 @@ class CreateNoteForm(forms.Form):
         widget=forms.ClearableFileInput(attrs={'class': 'form-control'})
     )
     course_code = forms.ModelChoiceField(
-        queryset=Course.objects.all(),
+        queryset=Course.objects.values_list('course_code', flat=True),
         required=True,
         widget=forms.Select(attrs={'class': 'form-control'})
     )

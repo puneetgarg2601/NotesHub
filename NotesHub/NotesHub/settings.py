@@ -73,6 +73,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'NotesHub.wsgi.application'
 
+# Google drive API storage
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = 'credentials.json'
+GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = 'notes'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

@@ -27,13 +27,8 @@
             {{ form.file }}
         </div>
         <div class="mb-3">
-            <label for="course_code" class="form-label">Course Code</label>
-            <select id="course_code" name="course_code" class="form-control" required>
-                <option value="">Select Course</option>
-                {% for course in courses %}
-                    {% comment %} <option value="{{ course.id }}">{{ course.code }} - {{ course.name }}</option> {% endcomment %}
-                    <option value="{{course}}">{{course}}</option>
-                {% endfor %}
+                {{ form.course_code.label_tag }}
+                {{ form.course_code }}
             </select>
         </div>
         

@@ -4,8 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import *
-from .utils.storage_util import uploadToDrive
-from .utils.util import *
+
+from .utils import *
 import os
 
 def index(request):

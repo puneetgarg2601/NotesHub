@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import *
-from .utils import *
+from .utils.storage_util import uploadToDrive
+from .utils.util import *
 import os
 
 def index(request):
@@ -112,3 +113,87 @@ def createNoteView(request):
 
     return render(request, 'create_note.html', {'form': form})
 
+from datetime import datetime, timedelta
+
+
+@login_required(login_url='login')
+def analyticsView(request, type, id):
+
+    data = {
+        'view_count': 50,
+        'total_time_spent': 120,
+        'downloaded_times': 10,
+        'upvotes': 20,
+        'downvotes': 2,
+        'bookmark_count':7,
+        'avg_time_per_view': 1,
+        'engagement_rate': 1,
+        'upvote_ratio': 1,
+        'user_engagement': [],
+        'user_time_view': []
+    }
+
+    if type == 'note':
+        # note = get_object_or_404(Notes, id=int(id))
+
+        # engagement_rate = (note.upvotes + note.bookmark_count) / note.view_count * 100
+        # upvote_ratio = note.upvotes / (note.upvotes + note.downvotes)
+        # avg_time_per_view = note.total_time_spent / note.view_count
+
+        data['title'] = 'Notes Analytics'
+        # data['view_count'] = note.view_count
+        # data['total_time_spent'] = note.total_time_spent
+        # data['downloaded_times'] = note.downloaded_times
+        # data['upvotes'] = note.upvotes
+        # data['downvotes'] = note.downvotes
+        # data['bookmark_count'] = note.bookmark_count
+        # data['engagement_rate'] = engagement_rate
+        # data['upvote_ratio'] = upvote_ratio
+        # data['avg_time_per_view'] = avg_time_per_view
+
+    elif type == 'user':
+
+        # user = get_object_or_404(User, username=id)
+        #TODO: group by date also for better analytics
+        # notes = Notes.objects.filter(user=user).order_by('created_at').values()
+        
+        data['title'] = 'User Analytics'
+        # data['view_count'] = notes.aaggregate(Sum('view_count'))
+        # data['total_time_spent'] = notes.aaggregate(Sum('total_time_spent'))
+        # data['downloaded_times'] = notes.aaggregate(Sum('downloaded_times'))
+        # data['upvotes'] = notes.aaggregate(Sum('upvotes'))
+        # data['downvotes'] = notes.aaggregate(Sum('downvotes'))
+        # data['bookmark_count'] = notes.aaggregate(Sum('bookmark_count'))
+
+        # engagement_rate = (data['upvotes'] + data['bookmark_count']) / data['view_count'] * 100
+        # upvote_ratio = data['upvotes'] / (data['upvotes'] + data['downvotes'] + 1) # +1 to handle divide by zero exception
+        # avg_time_per_view = data['total_time_spent'] / data['view_count']
+
+        # data['engagement_rate'] = engagement_rate
+        # data['upvote_ratio'] = upvote_ratio
+        # data['avg_time_per_view'] = avg_time_per_view
+
+        # for note in notes:
+        #     data['view_count'] += note.view_count
+        #     data['total_time_spent'] += note.total_time_spent
+        #     data['downloaded_times'] += note.downloaded_times
+        #     data['upvotes'] += note.upvotes
+        #     data['downvotes'] = note.downvotes
+        #     data['bookmark_count'] = note.bookmark_count
+
+        #     data['user_engagement'].append({
+        #         'label': note.created_at.strftime('%Y-%m-%d'),
+        #         'x': note.view_count,
+        #         'y': getEngagementRate(note)
+        #     })
+
+        #     data['user_time_view'].append({
+        #         'labels': note.created_at.strftime('%Y-%m-%d'),
+        #         'data': getAvgTimePerView(note)
+        #     })
+        # data['engagement_rate'] = (data['upvotes'] + data['bookmark_count']) / data['view_count'] * 100 if data['view_count'] > 0 else 0
+        # data['upvote_ratio'] = data['upvotes'] / (data['upvotes'] + data['downvotes']) if data['upvotes'] + data['downvotes'] > 0 else 0
+        # data['avg_time_per_view'] = data['total_time_spent'] / data['view_count']
+
+
+    return render(request, 'analytics.html', {'data': data})

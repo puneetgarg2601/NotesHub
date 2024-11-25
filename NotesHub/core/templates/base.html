@@ -23,7 +23,7 @@
                   <i class="bi bi-plus"></i> Note
                 </a>
                 <a href="{% url 'bookmark' %}" class="btn btn-primary me-3" type="submit">My Bookmarks</a>
-                <a href="{% url 'logout' %}" class="btn btn-primary me-3" type="submit">My Analytics</a>
+                <a href="{% url 'analytics' 'user' user.username %}" class="btn btn-primary me-3" type="submit">My Analytics</a>
                 <a href="{% url 'logout' %}" class="btn btn-success" type="submit">Logout</a>
             {% endif %}
           </form>

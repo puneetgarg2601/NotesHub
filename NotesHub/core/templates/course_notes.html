@@ -40,10 +40,10 @@
                         <p class="lead small">Added by {{ note.user.username }}</p>
                     </div>
                     <div class="d-flex justify-content-around mt-auto">
-                      <img id="like-icon" src="like.svg" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">
+                      <img id="like-icon" src="{% static 'images/like.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">
                       <!-- <img src="like_filled.svg" alt="like_filled" width="24px" height="24px" style="cursor: pointer;"> -->
 
-                  <img id="bookmark-icon" src="bookmark.svg" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">    
+                  <img id="bookmark-icon" src="{% static 'images/bookmark.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">    
                     </div>
                 </div>
             </div>

@@ -1,8 +1,10 @@
 import csv
 from core.models import Course
 
+# python3 manage.py runscript core.webscraper.populate_courses
+
 try:
-    with open('courses.csv', mode='r') as file:
+    with open('./core/webscraper/courses.csv', mode='r') as file:
         csv_reader = csv.DictReader(file)
         for row in csv_reader:
             

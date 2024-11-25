@@ -177,7 +177,7 @@ def search_courses(request):
         for course in courses
     ]
     
-    return JsonResponse({'courses': courses_data})from datetime import datetime, timedelta
+    return JsonResponse({'courses': courses_data})
 
 
 @login_required(login_url='login')

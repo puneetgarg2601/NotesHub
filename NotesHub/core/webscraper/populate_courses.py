@@ -1,5 +1,5 @@
 import csv
-from .models import *
+from core.models import Course
 
 try:
     with open('courses.csv', mode='r') as file:

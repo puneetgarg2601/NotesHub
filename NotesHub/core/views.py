@@ -239,7 +239,7 @@ def analyticsView(request, type, id):
 
     elif type == 'user':
 
-        # user = get_object_or_404(User, username=id)
+        user = request.user
         #TODO: group by date also for better analytics
         # notes = Notes.objects.filter(user=user).order_by('created_at').values()
         

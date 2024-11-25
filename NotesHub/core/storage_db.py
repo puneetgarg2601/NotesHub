@@ -1,10 +1,13 @@
+
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from googleapiclient.http import MediaFileUpload
 from django.conf import settings
 from googleapiclient.errors import HttpError
-import time
+
+
+supported_file_types = ['doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'pdf', 'txt', 'html', 'xml']
 
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
@@ -74,9 +77,13 @@ def uploadToDrive(filename, filepath):
         # change file permission to public
         makeFilesPublic(drivefile.get('id'))
 
+        file_type = filename.split('.')[-1]
+
         download_url = 'https://drive.google.com/uc?id={0}&export=download'.format(drivefile.get('id'))
         preview_url = 'https://drive.google.com/file/d/{0}/preview?usp=drivesdk'.format(drivefile.get('id'))
-        thumbnail_url = 'https://drive.google.com/thumbnail?authuser=0&id={0}'.format(drivefile.get('id'))
+        thumbnail_url = ''
+        if file_type in supported_file_types:
+            thumbnail_url = 'https://drive.google.com/thumbnail?authuser=0&id={0}'.format(drivefile.get('id'))
         return download_url, thumbnail_url, preview_url
         
     except Exception as error:

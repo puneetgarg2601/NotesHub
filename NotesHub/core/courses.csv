@@ -1,0 +1,178 @@
+Course Code,Course Name,Short names,Description
+CS 101,Computer Programming and Utilization,CPU,"This course provides an introduction to problem solving with computers using a modern language such as Java or C/C++. Topics covered will include :
+* Utilization : Developer fundamentals such as editor, integrated programming environment, Unix shell, modules, libraries.
+* Programming features : Machine representation, primitive types,arrays and records, objects, expressions, control statements, iteration,procedures, functions, and basic i/o.
+* Applications : Sample problems in engineering, science, text processing, and numerical methods."
+CS 105,Discrete Structures,DS,"Propositions and predicates, proofs and proof techniques. Sets, relations and functions, cardinality, basic counting. Posets and lattices: Dilworth`s theorem, inversion and distributive lattices. Graph theory : paths, cycles, trees, connectivity. Group theory : Lagrange`s theorem, homomorphisms, applications."
+CS 213,Data Structures and Algorithms,DSA,"Introduction to data structures, abstract data types, analysis of algorithms. Creation and manipulation of data structures: arrays, lists, stacks, queues, trees, heaps, hash tables, balanced trees, tries, graphs. Algorithms for sorting and searching, order statistics, depth-first and breadth-first search, shortest paths and minimum spanning tree."
+CS 215,Data Analysis and Interpretation,DAI,"Descriptive statistics
+Discrete and continuous probability
+Random variables and expectation
+Special random variables: Gaussian, Bernoulli, Beta, Gamma, Uniform, Poisson, Exponential, Binomial, etc.
+Hypothesis testing
+Parameter estimation
+Regression
+Probability density estimation"
+CS 218 M,Design and Analysis of Algorithms,DAA,"Models of computation, algorithm analysis, time and space complexity, average and worst case analysis, lower bounds. Algorithm design techniques: divide and conquer, greedy, dynamic programming, amortization, randomization. Problem classes P, NP, PSPACE; reducibility, NP-hard and NP-complete problems. Approximation algorithms for some NP-hard problems."
+CS 228,Logic For CS,LFCS,"1 Propositional logic:
+1.1 Declarative sentences
+1.2 Natural deduction
+1.2.
+1 Rules for natural deduction
+1.2.2 Derived rules
+1.2.3 Provable equivalence
+1.3 Propositional logic as a formal language
+1.4 Semantics of propositional logic
+1.4.1 The meaning of logical connectives
+1.4.2 Soundness of propositional logic
+1.4
+.3 Completeness of propositional logic
+1.5 Normal forms
+1.5.1 Semantic equivalence, satisfiability, and validity
+1.5.2 Conjunctive normal forms and validity
+1.5.3 Horn clauses and satisfiability
+1.6 SAT solvers
+2 Predicate logic
+2.1 Predicate logic as a formal language
+2.1.1 Terms
+2.1.2 Formulas
+2.1.3 Free and bound variables
+2.1.4 Substitution
+2.2 Proof theory of predicate logic
+2.2.1 Natural deduction rules
+2.2.2 Quantifier equivalences
+2.3 Semantics of predicate logic
+2.3.1 Models
+2.3.2 Semantic entailment
+2.3.3 The semantics of equality
+2.4 Undecidability of predicate logic
+2.5 Expressiveness of predicate logic
+3 Program correctness
+3.1 Notion of program correctness
+3.1.1 Hoare triples
+3.1.2 Partial and total correctness
+3.1.3 Program variables and logical variables
+3.2 Proof calculus for partial correctness
+3.2.1 Proof rules
+3.2.2 Proof tableaux
+3.3 Proof calculus for total correctness
+3.4 Programming by contract
+4 Other Applications such as Logic in databases, Logic programming, Puzzle solving
+5 Practice with Verification tools"
+CS 230,Digital Logic Design and Computer Architecture,DLDCA,"1 Logic gates, SOP, POS, KMAPs, Number system: fixed point, floating-point, combinational circuits 2 Combinational circuits, sequential circuits 3 Sequential circuits, FSMs 4 FSM, FSM Minimization 5 Intro to processors, CPU. Von Neumann architecture, ISA vs microarchitecture, computer organization 6 Instruction pipelining 7 Mid-sem Week 8 Superscalar processors 9 Superscalar processors, SMTs 10 Memory hierarchy including virtual memory 11 More on Caches, DRAM 12 Storage and I/O 13 GPUs, TPUs, and accelerators, Case study: Recent Processors and GPUs"
+CS 231,Digital Logic and Computer Architecture Lab,DLCAL,"Labs on (a) Verilog/VHDL, (b) combinational and sequential circuits, (c) assembly language programming, (d) Instruction pipelining and superscalar processors, and (e) Memory hierarchy optimizations involving tools like Pin and architecture simulators,"
+CS 293,Data Structures Lab,DSL,"Implementation of, and experiments with, basic data structures and use in dynamic operations on data for different algorithms and problem domains; comparison of asymptotic complexity with real behaviour of algorithms; project."
+CS 317 M,Database and Information Systems,DIS,"Overview of data management systems. Relational model and query languages (relational algebra and calculus, SQL). Database design using the ER Model, ER Diagrams, UML Class Diagrams. Relational database design and normalization. Integrity and Security. Design and development of Web based information systems. Overview of storage structures and indexing, query processing and optimization, and transaction processing. Introduction to Big Data management concepts such as: distributed and scalable data storage, including distributed file systems, key value stores, column stores and graph databases, replication and consistency, and concurrent data processing using the Map Reduce paradigm. Introduction to decision support and data analysis, data warehousing and data mining, and Information Retrieval."
+CS 339,Abstractions and Paradigms for Programming,APP,"Review of the program development process, Issues in program design, Structured programming, Data and control abstractions, Programming with assertions. Reasoning about programs and proving correctness of programs. Ideas behind imperative, applicative, object oriented and logic programming paradigms such as typing, expressions, pure functions, recursion, higher order functions, encapsulation, inheritance, goal satisfaction, backtracking, unification. Some of the ideas behind the implementation of the paradigms. Course to be centered around problems and applications that demonstrate the main themes."
+CS 347 M,Operating Systems,OS,"Overview of operating systems: batch processing, multiprogramming, time-sharing and real time systems. Concurrent processes: communication and synchronisation. Process management, deadlocks. Main memory management: paging, segmentation, sharing of programs and data. Device management. Information management: file system, security. A case study of UNIX."
+CS 348,Computer Networks,CN,"Design of Computer Networking protocols at all layers: transmission media, data link protocols, media access control, routing and congestion control, admission control, traffic shaping and policing, Internet working (IP) and transport layer protocols (TCP). Performance analysis of networks."
+CS 355,Programming Paradigms Laboratory,PPL,• Programming abstractions • Functional programming • Object-oriented programming • Reasoning about programs with assertions • Implementation models for paradigms
+CS 378,Computer Networks  Lab,CNL,"Experiments to support study of the Internet protocol stack: (a) Understand the use of various command line tools like ping, arp, route, ifconfig, host, traceroute, dig etc. (b) Use packet sniffing tools like tcpdump, wireshark to understand various concepts: encapsulation/decapsulation; multiplexing demultiplexing, dhcp operation, IP fragmentation, ARP operation, ICMP operation, TCP operation, application protocols such as HTTP, FTP, SMTP."
+CS 405,Game Theory and Algorithmic Mechanism Design,GTAMD,"A tentative list of topics are as follows. • Non-cooperative game theory – foundation for discussing mechanism design ◦ Quantitative models of strategic interaction: rationality, intelligence, common knowledge ◦ Complete information simultaneous move games – normal form representation ▪ Ideas of equilibria: domination of strategies, Nash equilibrium ▪ Existence results for mixed and pure Nash equilibrium ▪ Complexity of computating Nash equilibrium ▪ Correlated equilibrium. ◦ Complete information sequential move games – extensive form representation ▪ Perfect and imperfect information extensive form games ▪ Equilibria concepts – subgame perfect equilibrium, perfect Bayesian equilibrium, analogies with pure and mixed Nash equilibrium ◦ Incomplete information games ▪ Bayesian games ▪ Equilibria concepts tied to the belief system ▪ Nash and Bayesian equilibria in incomplete information games • Introduction to mechanism design ◦ Incomplete information to player types ◦ Social welfare function, Arrow’s impossibility result ◦ Social choice function, Gibbard-Satterthwaite result ◦ Domain restriction ◦ Single-peaked preferences ◦ Task allocation domain ◦ Quasi-linear preferences • Some real world applications of mechanism design"
+CS 409 M,Introduction to Cryptography,IC,"Perfectly secret encryption: one time pad, limitations of perfect security Private key encryption: defining encryption CPA security, constructing CPA secure scheme- pseudorandom functions and block ciphers, pseudorandom generators, stream ciphers, one-way functions, hardcore predicates, CCA security – motivates message authentication codes, some practical constructions. Hash Functions and applications: definition of hash functions, message authentication using hash functions, attacks, some additional applications Public key encryption: CPA security, introduction to some related modular arithmetic, El Gamal, RSA and Rabin constructions, some attacks on RSA. Zero Knowledge Proofs: introduction with motivation, definition of honest verifier zero knowledge, one protocol (graph coloring or some other NP complete problem)"
+CS 419 M,Introduction to Machine Learning,IML,"Welcome to ""Introduction to Machine Learning 419(M)"". In this undergraduate-level course, you will be introduced to the foundations of machine learning along with a slew of popular machine learning techniques. This will also give you insights on how to apply machine learning to solve a new problem. Syllabus Course syllabus includes basic classification/regression techniques such as Naive Bayes', decision trees, SVMs, boosting/bagging and linear/logistic regression, maximum likelihood estimates, regularization, basics of statistical learning theory, perceptron rule/multi-layer perceptrons, backpropagation, brief introduction to deep learning models, dimensionality reduction techniques like PCA and LDA, unsupervised learning: k-means clustering, gaussian mixture models, selected topics from natural/spoken language processing, computer vision, etc. [The syllabus is subject to minor changes depending on how the course proceeds.]"
+CS 6001,Game Theory and Algorithmic Mechanism Design,GTAMD,"A tentative list of topics are as follows.  Non-cooperative game theory – foundation for discussing mechanism design ◦ Quantitative models of strategic interaction: rationality, intelligence, common knowledge ◦ Complete information simultaneous move games – normal form representation ▪ Ideas of equilibria: domination of strategies, Nash equilibrium ▪ Existence results for mixed and pure Nash equilibrium ▪ Complexity of computating Nash equilibrium ▪ Correlated equilibrium. ◦ Complete information sequential move games – extensive form representation ▪ Perfect and imperfect information extensive form games ▪ Equilibria concepts – subgame perfect equilibrium, perfect Bayesian equilibrium, analogies with pure and mixed Nash equilibrium ◦ Incomplete information games ▪ Bayesian games ▪ Equilibria concepts tied to the belief system ▪ Nash and Bayesian equilibria in incomplete information games  Introduction to mechanism design ◦ Incomplete information to player types ◦ Social welfare function, Arrow’s impossibility result ◦ Social choice function, Gibbard-Satterthwaite result ◦ Domain restriction ◦ Single-peaked preferences ◦ Task allocation domain ◦ Quasi-linear preferences  Some real world applications of mechanism design"
+CS 6003,Web Security,WS,"Module1: Web BackgroundMotivation, brief history, what constitutes a web page, browser internals, web protocols, session management, server internals, web security landscape.Hand-in-hand with this theory, we will also explore some practical sessions involving usage of Wireshark to explore web protocol traffic, firefox/chrome browser developer tools to inspect/edit web pages, cookies, storage, and OWASP ZAP, a versatile tool for web application security testingModule2: Server side attacks and defenseSQL (Structured Query language) injection, Server Side Request Forgery (SSRF), Information disclosure, Command injection, File Upload Vulnerabilities, Authentication, Authorization, Path traversal, Vulnerabilities in APIs, Server Side Template Injection, DOS attacksPractical sessions will explore a subset of these server-side attacks hands-on.Module3: Client side attacks and defenseCross Site Request Forgery (CSRF), Cross Origin Resource Sharing (CORS), Cross Site Scripting (XSS), Web sockets, ClickjackingPractical sessions will explore a subset of these client side attacks hands-on.Module4: Miscellaneous Topics (a subset will be covered as per time availability)Privacy, Third Party Code, Web LLM attacks, HTTP Parameter Pollution, Subdomain Takeover etc"
+CS 601,Algorithms and Complexity,AC,"Check the webpage below.
+Techniques for the Design and Analysis of Algorithms. Formal models of computation, time and space complexity, Theory of NP-Completeness, Approximability of NP-Hard problems. Introduction to parallel, randomized and on-line algorithms."
+CS 602,Applied Algorithms,AA,his course aims to equip students with the skills to design efficient algorithms.  We will explore various advanced algorithm design techniques and demonstrate how these techniques can be applied to solve different algorithmic problems. The course focuses on the mathematical aspects of algorithm design.
+CS 618,Program Analysis,PA,"Mathematical Foundations of Program Analysis Lattices: partial orders and approximations, bounded lattices, complete lattices. Function spaces monotonicity, distributivity, separability, boundedness. Fixed Point Computations: least fixed point and induction, greatest fixed point and co-induction. Abstract interpretation: concretisation and abstraction functions, Galois connection. Alias analysis of heap data Type of alias information: Context sentitive/insensitive, flow sensitive.insensitive, may/must aliases. Representations of heap properties: shape graphs, alias graphs, storage shape graphs, k-limiting, compact representations, access graphs. Data flow analysis for aliases. Liveness analysis of heap data Shape graphs and heap safety automaton based approach. Static type inferencing of flow sensitive polymorphic types. Type inferencing for validation and type inferencing for optimization. Data flow analysis for monomorphic languages. Extensions for polymorphic types, type graphs and operations. Inter procedural data flow analysis Context sensitive/insensitive analysis. Functional approach. Call strings approach. Call strings graphs. Call strings approach for k-bounded problems."
+CS 626,"Speech, Natural Language Processing and the Web",SNLPW,N/A
+CS 631,Implementation Techniques for Relational Database Systems,ITRDS,"Physical storage and indexing structures, Query processing algorithms, Query optimization, Transaction processing and serializability, Concurrency Control, Recovery.
+Big data management: transaction and query processing on parallel and distributed databases including issues of availability, replication, consistency, concurrency control, and recovery.
+Emerging database trends."
+CS 635,"Indexing, retrieval and learning for text and graphs",IRLTG,"Formatting messed up below, please visit https://docs.google.com/document/d/1koNsAjmGZHAPxwr7qWyFnF94A1qetX-0ecubS0ugC5M/edit (Owing to the rapid research developments, this course has been continually overhauled over the years. This is the first semester after the “large language model” revolution, so we are further modifying and enhancing the course, discarding outdated material, and including new material suitable for the current workplace, as well as continuing research. Because of logistical limitations, we will continue using the old course codes until Spring 2024 and plan to assign two new course codes commencing Autumn 2024.) Summary: Searching structured and unstructured information sources was the foundation of Google and is of immense value to other companies like Amazon, Bing and IBM. This course focuses on core scientific and engineering principles driving indexing, retrieving and analyzing text and graphs, which are at the heart of search systems. We will focus on scalable algorithms for indexing text and graphs, and modern machine learning techniques to represent and rank information items like passages and subgraphs. Target: Btech4 and beyond. Attendees will learn modern techniques widely used in industry as well as the frontiers of current research. Both classical and neural learning methods will be explored. The course will be hands-on with programming assignments. Evaluation (tentative): Best 60% from 3x 30% written exams; 30% programming assignments (possibly Kaggle-like contests); 10% weekly safe quizzes. Extra credit for course projects and paper reviews. Topics: Classic information retrieval Tokenization before the age of transformers Inverted list, compression Dictionary, compression TFIDF, vector space model Sparse retrieval query processing, DAAT, TAAT Ranking Evaluation and losses Learning to rank for sparse retrieval Dense text representation learning Pseudo relevance feedback Latent semantic indexing Word2vec and GloVe ConvNet for text retrieval, LSTM LSTM, transformer Efficiency issues for long attention context Dense indexing Need for locality sensitive hashing (LSH) Major LSH families: Hamming, cosine, L2, L1, dot, Jaccard DPR and dense indexing, ANNS ColBERT and friends Symmetric vs asymmetric LSH Machine learning for data-sensitive DPR Contrastive sampling, batch design Graph search and mining Social graphs (Web, social media) Knowledge graphs (WordNet, Wikidata, Wikipedia) Salient properties (degree, diameter, dense cores) Notions of graph proximity for diverse applications Hitting time, commute time, escape time, effective conductance (Personalized) PageRank, SimRank, TotalRank etc."
+CS 663,Fundamentals of Digital Image Processing,FDIP,"Image enhancement: histogram equalization and specification, contrast modification, neighborhood filtering, image smoothing and image sharpening. Frequency domain processing: Sampling theorem, Fourier transforms and their properties, applications in image filtering Edge detection Principal components analysis: applications in face recognition [eigenfaces], and denoising (later) Image restoration: denoising, deblurring Image segmentation: region-based methods, template matching, Hough transform, Mean shift, active contours (snakes) Color models, filtering of color images Image compression: JPEG, wavelet representation for images Tomography, radon Transform, projection theorem, image reconstruction from back-projections Statistics of natural images (time permitting), Morphological image processing (time permitting), Sparse representations and non-local similarity (time permitting), introduction to compressive sensing (time permitting)"
+CS 683,Advanced Computer Architecture,ACA,"Superscalar and out-of-order processors, microarchitecture techniques to improve processor performance. Advanced caches: multicore caches, cache coherence protocols, techniques to improve memory hierarchy performance, and memory hierarchy for scalable multicore design. Introduction to SIMD processors, GPUs, and accelerators like TPUs. Microarchitecture security and architecture tradeoffs in terms of performance, power, and security"
+CS 699,Software Lab.,SL,"Vim/emacs, HTML, CSS
+Preparing reports and presentations using latex, beamer, drawing software (e.g. inkscape, xfig, open-office), and graph plotting software (e.g., pyplot, gnuplot)
+Programming support: IDE (e.g. eclipse, netbeans), Makefile, debugging tools, profiling tools (e.g. gprof, prof), version management (SVN/Git), code review,
+Basic Java, Java collections, interfaces
+Unix basics: shell, file system, permissions, process hierarchy, process monitoring, ssh, rsync
+Unix tools: e.g. awk, sed, grep, find, head, tail, tar, cut, sort, Bash scripting: I/O redirection, pipes
+Programming using scripting language (e.g. python)
+Lexical analysis and parsing tools (e.g. lex/yacc, flex/bison)
+Optional topics (may be specific to individual students' projects): intro to sockets, basic SQL for data storage, JDBC/pygresql, PHP, mobile apps
+A project would be included which touches upon many of the above topics, helping students see the connect across seemingly disparate topics. The project is also expected to be a significant load: 20-30 hours of work."
+CS 725,Foundations of machine learning,FML,"Remedial co-requisite: Mathematical foundations (Separately proposed by Prof. Saketh Nath)
+Recommended parallel courses: CS709 (Convex optimization)
+Course Content :
+Supervised learning: decision trees, nearest neighbor classifiers, generative classifiers like naive Bayes, linear discriminate analysis, loss regularization framework for classification, Support vector Machines
+Regression methods: least-square regression, kernel regression, regression trees
+Unsupervised learning: k-means, hierarchical, EM, non-negative matrix factorization, rate distortion theory"
+CS 744,Design and Engineering of Computing Systems,DECS,"CPU scheduling, process management and inter-process communication, memory management, thread-safe programming, synchronization and concurrency control, synchronous and asynchronous I/O access mechanisms, design and implementation of scalable distributed systems, metrics for evaluation, tools and techniques for measurement, profiling and analysis of systems. These concepts will be taught through a series of exercises and assignments involving the design, implementation and evaluation of applications such web server, file server, game engine etc."
+CS 760,Topics in Computational Complexity,TCC,NA
+CS 771,Foundations of verification and automated reasoning,FVAR,"Module 1 : Logic (21 hours) • Propositional logic: syntax and semantics, truth table, satisfiability proof systems, equivalences, normal forms, tseitin encoding, (3 hours) • FOL(First order logic) syntax and semantics, SAT problem in FOL, proof systems (without completeness), FOL Theories, (6 hours) 2 • Simple programming language, small and big step semantics, strongest post, weakest pre, Hoare logic, invariants, tools for invariant checking (6 hours) • Satisfiability(SAT) solvers for propositional logic, CDCL, optimizations in CDCL, encoding problems into SAT problems, satisfiability modulo theory(SMT) solvers (6 hours) Module 2 : Automata (21 hours) • Linear temporal logic (LTL) and Computation tree logic(CTL) syntax and semantics, normal forms, satisfiability problems ( 6 hours ) • Automata on finite words, DFA and NFA, subset construction, regular expression pumping lemma (3 hours) • Automata on infinite words, Buchi automaton(BA), vs ω-regular languages, NBA equivalence to LTL, emptiness. (6 hours) • Computability, Turing machine, decidability (6 hours)"
+CS 781,Formal Methods in Machine Learning,FMML,"1. Relevant basics for course: 1. Relevant logic basics (1 week): Expressing properties using propositional, first order and linear temporal logics, Hoare triples, satisfaction and validity of formulas. 2. Relevant ML basics (1 week): 1. Feed-forward deep neural networks: Structure, loss functions, non-linear functions used in NNs, training basics, NNs as classifiers, binarized neural networks 2. Reinforcement Learning: Agent, environment, reward function, strategy, Q-learning basics 3. Probably Approximately Correct Learning: Basic theorem and applications 2. Feed-forward Deep Neural Networks (DNN) through the lens of formal methods 1. Modeling (1 week): systems of constraints, use of abstraction and refinement 2. Property specification (1 week): safety, robustness, fairness, pitfalls 3. Algorithms and techniques for checking properties against models 1. Constraint solving techniques, in-depth case study (1 week): ReLUplex and application in ACAS-Xu safety verification 2. Abstraction refinement techniques, in-depth case study (2 weeks): DeepPoly and application in MNIST classifier verification 4. Robustness analysis using constraint solving and model counting (1 week) 5. Generating explainable interpretations with guarantees (1 week) 3. Reinforcement Learning (RL) through the lens of formal methods 1. Shield synthesis for safe RL using Markov Decision Processes (MDP) as models (2 weeks) 2. Safe RL via Justified Speculative Control (1.5 weeks) 3. Safe RL via decision tree policy extraction (1.5 weeks)"
+CS 782,Algebra and Computation,AC,"Algorithms for fast polynomial evaluation, polynomial multiplication, division with remainder GCD of polynomials, Resultant and properties Algorithms for polynomial factorization, and applications Lattices, Shortest vector problem and LLL algorithm and applications Number theoretic algorithms like GCD, Solving linear systems over integers, rational approximation of irrational numbers Algorithms for integer factorization Shor’s algorithm for integer factorization on quantum computers Algorithms for primality testing including both randomized and deterministic algorithms Computational algebraic geometry, Ideal Membership problem, degree bounds, Groebner basis based methods Algebraic independence, Jacobian and applications Topics in algebraic complexity theory"
+CS 783,Theoretical Foundations of Cryptography,TFC,"* Basic cryptographic objectives: secrecy, integrity and authentication * Perfect secrecy and its limitations * Computational secrecy: computational notions like computational indistinguishability and pseudo-randomness, hardness vs pseudo-randomness * Shared-key cryptography: shared-key encryption: pseudo-random functions, hybrid argument, pseudo-random permutations and domain extension, message authentication codes, collision-resistant hash functions * Public-key cryptography: key-exchange, structure vs hardness, finite groups and modular arithmetic, public-key encryption, El Gamal and RSA encryption, groups of unknown order, hybrid encryption, digital signatures, Lamport`s signature, RSA signature, * Proof systems: authentication and identification, Schnorr`s, interactive protocols, zero-knowledge proofs, GMW or Blum`s protocol, commitment schemes, succinct proofs * Some advanced cryptographic objectives: obfuscation, VBB and iO, secure function evaluation, Yao`s garbling, oblivious transfer"
+CS 787,Language Engineering for Complex Programs: A C++ Perspective,LECPACP,"The course deals with the extensive set of language engineering and design features that C++ Programming Language offers to develop complex programs, and their applications to systems software and tools. (i) Components and modularity: Namespaces, Koneig lookup, scoping rules, initializers, different kinds of constructors/destructors, separate compilation, libraries, errors and exceptions. (ii) Functions and control: Overloading and operator cascading, Lambda functions, parameter passing models, iterators, assignment semantics, dynamic dispatch/virtual table implementations. (iii) Concurrency and distributed programming: Threading, Synchronization, Parallel and distributed programs (iv) Generic Programming: Building templates, and the feature set in the standard template library, variadic functions and macros, variadic templates, template metaprogramming (v) Data, streams and conversions: Types and typing rules, type inferencing, type-safety issues, Memory models, strings, regular expressions, containers, ranges, file streams, string streams. (vi) Patterns and compositions: Design pattern implementations for patterns such as Strategy, Prototype, Builder, Visitor, Composite, Adapter, Proxy, Observer and Iterator. (vii) Advanced Applications in C++: Engineering and implementations of programs utilizing the rich set of features and design patterns, applying them to systems software such as distributed publisher subscriber event services, sequential algorithmics, model-based tools such as model translators, analyzers, file systems, interpreters and execution engines of experimental languages and extended language features for specialized purposes"
+CS 788,Algebraic Automata Theory,AAT,"The following topics will be covered in this course: 1. Equivalence of monadic second-order logic definablity and regular languages. 2. Algebraic notions of monoids and morphisms and it use in recognizing regular word languages. Computation of the syntactic monoids and its relation with minimum automata. 3. Green`s relations and its applications: several correspondences between language classes defined using algebraic, logical and combinatorial means. Schutzenberger`s theorem on equivalence of star-free regular expressions, first-order logic and aperiodic monoids, Simon`s theorem etc.Decidability results using algebraic techniques. 4. Krohn-Rhodes decomposition result and its applications: characterizations of language classes using cascade products of elementary automata. 5. Advanced results, New algebraic structures and approaches to reason about richer settings such as trees, infinite words, traces and countable words."
+CS 101,Computer Programming and Utilization,CPU,N/A
+CS 108,Software Systems Lab,SSL,N/A
+CS 207 M,Discrete Structures,DS,N/A
+CS 213 M,Data Structures and Algorithms,DSA,N/A
+CS 217,Artificial Intelligence and Machine Learning,AIML,N/A
+CS 218,Design and Analysis of Algorithms,DAA,N/A
+CS 219,Operating Systems,OS,N/A
+CS 224 M,Computer Networks,CN,N/A
+CS 228 M,Logic For CS,LFCS,N/A
+CS 236,Operating Systems Lab,OSL,N/A
+CS 240,Artificial Intelligence and Machine Learning (Lab),AIMLL,N/A
+CS 302,Implementation of Programming Languages,IPL,N/A
+CS 310 M,Automata Theory,AT,N/A
+CS 316,Implementation of Programming Languages Lab,IPLL,N/A
+CS 317,Database and Information Systems,DIS,N/A
+CS 349,Database and Information Systems + Lab (along with Sudarshan),DISLS,N/A
+CS 387,Database and Information Systems Lab,DISL,N/A
+CS 433,Automated reasoning,A,N/A
+CS 6002,Selected Areas of Mechanism Design,SAMD,N/A
+CS 603,Geometric Algorithms,GA,N/A
+CS 6102,Implementation Security in Cryptography,ISC,N/A
+CS 614,Advanced Compilers,AC,N/A
+CS 621,Artificial Intelligence,AI,N/A
+CS 648,Selected Topics in Network Algorithms,STNA,N/A
+CS 726,Advanced machine learning,A,N/A
+CS 728,Organization of Web information,OW,N/A
+CS 736,Medical Image Computing,MIC,N/A
+CS 738,"Concepts, Algorithms and Tools for Model-Checking",CATMC,N/A
+CS 747,Foundations of Intelligent and Learning Agents,FILA,N/A
+CS 752,System Dynamics: Modeling &amp; Simulation for Development,SDMSD,N/A
+CS 754,Advanced Image Processing,AIP,N/A
+CS 755,Competitive programming,C,N/A
+CS 765,"Introduction of Blockchains, Cryptocurrencies, and Smart Contracts",IBCSC,N/A
+CS 766,Analysis of Concurrent Programs​,ACP,N/A
+CS 768,Learning with Graphs,LG,N/A
+CS 769,Optimization in Machine Learning,OML,N/A
+CS 770,Process Engineering,PE,N/A
+CS 772,Deep Learning for Natural Language Processing,DLNLP,N/A
+CS 773,Computer Architecture for Performance and Security,CAPS,N/A
+CS 774,Spectral Graph Theory,SGT,N/A
+CS 784,Image Synthesis,IS,N/A
+CS 785,Theoretical Computer Science Toolkit,TCST,N/A
+CS 789,Introduction to Probabilistic Proof Systems,IPPS,N/A
+CS 790,Privacy Enhancing Technologies,PET,N/A
+CS 801,Seminar (Ph. D.),SPD,N/A
+CS 899,Communication Skills,CS,N/A
+CS---,Generative AI and LLM design for Network Configuration,GAILLMNC,N/A
+CS----,Quantitative verification,Q,N/A
+CS 101,Computer Programming and Utilization,CPU,N/A
+CS 101 MSc,Computer Programming and Utilization  ( M.Sc students),CPUMS,N/A
+CS 103,Computing and Science,CS,N/A
+CS 104,Software Systems Lab,SSL,N/A
+CS 105,Discrete Structures,DS,N/A
+CS 108,Software Systems Lab,SSL,N/A
+CS 152,Abstractions and Paradigms for Programming,APP,N/A
+CS 154,Programming Paradigms Laboratory,PPL,N/A
+CS 202,Programming,P,N/A
+CS 203,Discrete Structures,DS,N/A
+CS 204,Switching Theory and Logic Design,STLD,N/A
+CS 205,Programming,P,N/A
+CS 206,Formal Methods in CS,FMCS,N/A
+CS 207,Discrete Structures,DS,N/A
+CS 207 M,Discrete Structures,DS,N/A
+CS 208,Automata Theory and Logic,ATL,N/A
+CS 210,Logic Design,LD,N/A
+CS 211,Software Lab two,SL,N/A
+CS 212,Electronics Design I,EDI,N/A
+CS 213,Data Structures and Algorithms,DSA,N/A

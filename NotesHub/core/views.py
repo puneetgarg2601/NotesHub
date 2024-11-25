@@ -4,10 +4,13 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from .forms import *
-
+from .models import Activities, Bookmark
+from .storage_db import *
 from .utils import *
 import os
+import json
 
 @login_required(login_url='login')
 def index(request):
@@ -125,7 +128,6 @@ def createNoteView(request):
             messages.error(request, "Please correct the errors below.")
     else:
         form = CreateNoteForm()
-
     return render(request, 'create_note.html', {'form': form})
 
 
@@ -201,6 +203,7 @@ def search_bookmarks(request):
 
 @login_required(login_url='login')
 def analyticsView(request, type, id):
+
 
     data = {
         'view_count': 50,
@@ -280,3 +283,65 @@ def analyticsView(request, type, id):
 
 
     return render(request, 'analytics.html', {'data': data})
+
+@login_required(login_url='login')
+def note_detail(request, note_id):
+    note = get_object_or_404(Notes, id=note_id)
+    activity, created = Activities.objects.get_or_create(user=request.user, note=note)
+    print(activity.liked)
+
+    return render(request, 'note_detail.html', {'note': note, 'activity': activity})
+
+# AJAX view to handle like toggle and update like count
+@csrf_exempt
+def toggle_like(request, note_id):
+    note = get_object_or_404(Notes, id=note_id)
+    user = request.user
+    
+    # Check if the user has already interacted with this note
+    activity, created = Activities.objects.get_or_create(user=user, note=note)
+    
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        is_liked = data.get('is_liked')
+        
+        # Update the like status
+        if is_liked:
+            activity.like()  # Set liked to 1
+            note.upvotes += 1  # Increment like count on the note
+        else:
+            activity.dislike()  # Set liked to 0
+            note.upvotes -= 1  # Decrement like count on the note
+        
+        note.save()  # Save the updated note
+        return JsonResponse({
+            'success': True,
+            'new_like_count': note.upvotes,
+            'liked': activity.liked  # Return the current like status for the user
+        })
+
+# AJAX view to handle bookmark toggle and update bookmark model
+@csrf_exempt
+def toggle_bookmark(request, note_id):
+    note = get_object_or_404(Notes, id=note_id)
+    user = request.user
+    
+    # Check if the user has already interacted with this note
+    activity, created = Activities.objects.get_or_create(user=user, note=note)
+    
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        is_bookmarked = data.get('is_bookmarked')
+        
+        # Update the bookmark status
+        if is_bookmarked:
+            activity.bookmark()  # Set bookmarked to 1
+            Bookmark.objects.get_or_create(user=user, notes=note)  # Add to the Bookmark model
+        else:
+            activity.unbookmark()  # Set bookmarked to 0
+            Bookmark.objects.filter(user=user, notes=note).delete()  # Remove from Bookmark model
+        
+        return JsonResponse({
+            'success': True,
+            'bookmarked': activity.bookmarked  # Return the current bookmark status for the user
+        })

@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block start %}
+<div class="container mt-5">
+    <!-- Note Detail Section -->
+    <div class="note-detail">
+        <h1>{{ note.title }}</h1>
+        <p><strong>Uploaded by</strong> {{ note.user.username }}</p>
+        
+        <div class="d-flex justify-content-start align-items-center">
+            <!-- Like Section -->
+            {% if activity and activity.liked == 1 %}
+                <img id="like-icon" src="{% static 'images/like_filled.svg' %}" alt="like" 
+                    width="24px" height="24px" style="cursor: pointer;" onclick="toggleLike()">
+            {% else %}
+                <img id="like-icon" src="{% static 'images/like.svg' %}" alt="like" 
+                    width="24px" height="24px" style="cursor: pointer;" onclick="toggleLike()">
+            {% endif %}
+
+            
+
+            <span id="like-count" class="ms-2 me-2">{{ note.upvotes }}</span> <!-- Like count -->
+            
+            <!-- Bookmark Section -->
+            {% if activity and activity.bookmarked == 1 %}
+                <img id="bookmark-icon" src="{% static 'images/bookmark_filled.svg' %}" alt="bookmark" 
+                    width="24px" height="24px" style="cursor: pointer;" onclick="toggleBookmark()">
+            {% else %}
+                <img id="bookmark-icon" src="{% static 'images/bookmark.svg' %}" alt="bookmark" 
+                    width="24px" height="24px" style="cursor: pointer;" onclick="toggleBookmark()">
+            {% endif %}
+
+        </div>
+
+        <div class="mt-3">
+            <p>{{ note.description }}</p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="mt-4">
+            <a href="{{ note.download_url }}" class="btn btn-primary" target="_blank">Download Now</a>
+            <a href="{% url 'analytics' 'note' note.id %}" class="btn btn-info ms-2">Analytics</a>
+        </div>
+        
+        <!-- Preview Section -->
+        <div class="mt-5 mb-5">
+            <iframe src="{{ note.preview_url }}" width="100%" height="600" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleLike() {
+        const likeIcon = document.getElementById('like-icon');
+        const likeCountElement = document.getElementById('like-count');
+        const currentSrc = likeIcon.src;
+        
+        const isLiked = currentSrc.includes('like_filled.svg');
+
+        fetch("{% url 'toggle_like' note.id %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'is_liked': !isLiked
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                if (isLiked) {
+                    likeIcon.src = "{% static 'images/like.svg' %}";
+                    likeCountElement.textContent = data.new_like_count;
+                } else {
+                    likeIcon.src = "{% static 'images/like_filled.svg' %}";
+                    likeCountElement.textContent = data.new_like_count;
+                }
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function toggleBookmark() {
+        const bookmarkIcon = document.getElementById('bookmark-icon');
+        const currentSrc = bookmarkIcon.src;
+        
+        const isBookmarked = currentSrc.includes('bookmark_filled.svg');
+
+        fetch("{% url 'toggle_bookmark' note.id %}", {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'is_bookmarked': !isBookmarked
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                if (isBookmarked) {
+                    bookmarkIcon.src = "{% static 'images/bookmark.svg' %}";
+                } else {
+                    bookmarkIcon.src = "{% static 'images/bookmark_filled.svg' %}";
+                }
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+</script>
+
+{% endblock %}

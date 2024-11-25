@@ -12,4 +12,7 @@ urlpatterns = [
     path('search/', views.search_courses, name='search_courses'),
     path('course/<str:course_code>/notes/', views.notesView, name='course_notes'),
     path('bookmarks/', views.search_bookmarks, name='bookmark'),
+    path('note/<int:note_id>/', views.note_detail, name='note_detail'),
+    path('toggle_like/<int:note_id>/', views.toggle_like, name='toggle_like'),
+    path('toggle_bookmark/<int:note_id>/', views.toggle_bookmark, name='toggle_bookmark'),
 ]

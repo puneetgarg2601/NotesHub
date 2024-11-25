@@ -29,21 +29,21 @@
         <div id="notes-container" class="row row-cols-2 row-cols-sm-4 row-cols-md-4 g-3" style="width: 100%;">
             {% for note in notes %}
             <div class="col mb-4">
-                <div class="card d-flex flex-column" style="height: 768px;">
-                    <a href="#" class="text-decoration-none">
+                <div class="card d-flex flex-column" style="height: 300px;">
+                    <a href="{% url 'note_detail' note.id %}" class="text-decoration-none">
                         <img src="{{ note.thumbnail_url }}" class="card-img-top" alt="Course Thumbnail" style="cursor: pointer; height: 180px; object-fit: cover;">
                     </a>
                     <div class="card-body d-flex flex-column flex-grow-1">
-                        <a href="#" class="text-decoration-none">
+                        <a href="{% url 'note_detail' note.id %}" class="text-decoration-none">
                             <h5 class="card-title" style="cursor: pointer;">{{ note.title }}</h5>
                         </a>
                         <p class="lead small">Added by {{ note.user.username }}</p>
                     </div>
                     <div class="d-flex justify-content-around mt-auto">
-                      <img id="like-icon" src="{% static 'images/like.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">
+                      <img id="like-icon" src="{% static 'images/like.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this, {{ note.id }})">
                       <!-- <img src="like_filled.svg" alt="like_filled" width="24px" height="24px" style="cursor: pointer;"> -->
 
-                  <img id="bookmark-icon" src="{% static 'images/bookmark.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">    
+                  <img id="bookmark-icon" src="{% static 'images/bookmark.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this, {{ note.id }})">    
                     </div>
                 </div>
             </div>
@@ -55,7 +55,8 @@
 </div>
 
 <script>
-function toggle(imageElement) {
+function toggle(imageElement, noteid) {
+    console.log(noteid)
     // Get the current image source
     const currentSrc = imageElement.src;
 
@@ -99,7 +100,7 @@ function searchNotes() {
         data.notes.forEach(note => {
             const noteCard = `
                 <div class="col mb-4">
-                    <div class="card d-flex flex-column" style="height: 768px;">
+                    <div class="card d-flex flex-column" style="height: 300px;">
                         <a href="#" class="text-decoration-none">
                             <img src="${note.thumbnail_url}" class="card-img-top" alt="Note Thumbnail" style="cursor: pointer; height: 180px; object-fit: cover;">
                         </a>
@@ -110,16 +111,11 @@ function searchNotes() {
                             <p class="lead small">Added by ${note.user__username}</p>
                         </div>
                         <div class="d-flex justify-content-around mt-auto">
-                            <svg class="mt-1" onclick="toggleColor(this)" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="cursor: pointer;">
-                                <path d="M12 2L5 9h14L12 2z" fill="white" stroke="black" stroke-width="2"/>
-                            </svg>
-                            <svg class="margin-bottom" onclick="toggleColor(this)" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="cursor: pointer;">
-                                <path d="M12 22L5 15h14L12 22z" fill="white" stroke="black" stroke-width="2"/>
-                            </svg>
-                            <svg onclick="toggleColor(this)" width="24" height="24" viewBox="0 0 24 24" style="cursor: pointer;">
-                                <path d="M5 5h10v15l-5-2-5 2z" fill="white" stroke="black" stroke-width="2"></path>
-                            </svg>
-                        </div>
+                      <img id="like-icon" src="{% static 'images/like.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">
+                      <!-- <img src="like_filled.svg" alt="like_filled" width="24px" height="24px" style="cursor: pointer;"> -->
+
+                  <img id="bookmark-icon" src="{% static 'images/bookmark.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">    
+                    </div>
                     </div>
                 </div>`;
             notesContainer.insertAdjacentHTML('beforeend', noteCard);

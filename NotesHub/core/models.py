@@ -65,3 +65,34 @@ class Bookmark(models.Model):
 
     def __str__(self):
         return f"{self.user.username}_{self.notes.id}"
+    
+
+class Activities(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    note = models.ForeignKey(Notes, on_delete=models.CASCADE)
+    
+    # Managing states as integers with choices
+    liked = models.IntegerField(choices=[(0, 'Not Liked'), (1, 'Liked')], default=0)
+    bookmarked = models.IntegerField(choices=[(0, 'Not Bookmarked'), (1, 'Bookmarked')], default=0)
+    unique_view = models.IntegerField(choices=[(0, 'Not Viewed'), (1, 'Viewed')], default=0)
+    
+    # You can create methods to handle these states
+    def like(self):
+        self.liked = 1
+        self.save()
+    
+    def dislike(self):
+        self.liked = 0
+        self.save()
+    
+    def bookmark(self):
+        self.bookmarked = 1
+        self.save()
+    
+    def unbookmark(self):
+        self.bookmarked = 0
+        self.save()
+    
+    def mark_as_viewed(self):
+        self.unique_view = 1
+        self.save()

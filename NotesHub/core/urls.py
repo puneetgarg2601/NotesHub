@@ -11,5 +11,5 @@ urlpatterns = [
     path('analytics/<str:type>/<str:id>/', views.analyticsView, name='analytics'),
     path('search/', views.search_courses, name='search_courses'),
     path('course/<str:course_code>/notes/', views.notesView, name='course_notes'),
-
+    path('bookmarks/', views.search_bookmarks, name='bookmark'),
 ]

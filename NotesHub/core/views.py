@@ -63,7 +63,6 @@ def loginView(request):
             
             if user is not None:
                 login(request, user)
-                messages.success(request, "Logged in successfully.")
                 return redirect('index')  
             else:
                 messages.error(request, "Invalid username or password.")
@@ -179,6 +178,26 @@ def search_courses(request):
     
     return JsonResponse({'courses': courses_data})
 
+@login_required(login_url='login')
+def search_bookmarks(request):
+    
+    user = request.user
+    bookmarked_notes = Notes.objects.filter(bookmark__user=user).distinct()
+    
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and 'query' in request.GET:
+        query = request.GET.get('query', '').strip()
+        # Filter notes based on title or description containing the search term
+        filtered_notes = bookmarked_notes.filter(
+            title__icontains=query
+        ) | bookmarked_notes.filter(description__icontains=query)
+        
+        # Serialize the filtered notes for the response
+        notes_data = list(filtered_notes.values('id', 'title', 'description', 'user__username', 'thumbnail_url'))
+        return JsonResponse({'notes': notes_data})
+    
+    # Pass the course and its notes to the template context for initial load
+    return render(request, 'bookmarks.html', {'notes': bookmarked_notes})
 
 @login_required(login_url='login')
 def analyticsView(request, type, id):

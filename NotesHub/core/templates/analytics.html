@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+{% block start %}
+
+<div class="container mt-5">
+    <h1>{{data.title}}</h1>
+    <!-- Dashboard Row -->
+    <div class="row">
+        <!-- Summary Section (Left Column) -->
+        <div class="col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Analytics Summary</h5>
+                    <p>Average Time Per View: <strong>{{ data.avg_time_per_view }} secs</strong></p>
+                    <p>Engagement Rate: <strong>{{ data.engagement_rate }}%</strong></p>
+                    <p>Upvote Ratio: <strong>{{ data.upvote_ratio }}%</strong></p>
+                    <p>Total Views: <strong>{{ data.view_count }}</strong></p>
+                    <p>Total Downloads: <strong>{{ data.downloaded_times }}</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section (Right Column) -->
+        <div class="col-lg-8">
+            <div class="row">
+                <!-- Engagement Chart -->
+                <div class="col-md-8 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <canvas id="engagementChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!-- Sentiment Chart -->
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <canvas id="sentimentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Time Spent Chart  -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="timeSpentChart"></canvas>
+                </div>
+            </div>
+        </div>
+        {% if data.user_engagement %}
+            <!-- User engagement chart -->
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="engagementScatterChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    {% if data.user_engagement %}
+        <!-- User notes view chart -->
+        <div class="row">
+            
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="notesViewCountLineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+</div>
+
+
+
+<script>
+    // Parse the JSON data passed from Django
+    const analyticsData = {{ data|safe }};
+    
+    // Engagement Score Chart (e.g., view count, bookmark count, download count)
+    const engagementCtx = document.getElementById('engagementChart').getContext('2d');
+    const engagementChart = new Chart(engagementCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Views', 'Bookmarks', 'Downloads'],
+            datasets: [{
+                label: 'Engagement',
+                data: [analyticsData.view_count, analyticsData.bookmark_count, analyticsData.downloaded_times],
+                backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(255, 159, 64, 0.2)'],
+                borderColor: ['rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Engagement Distribution'
+                }
+            }
+        }
+    });
+
+    // Sentiment Analysis Chart (Upvotes vs. Downvotes)
+    const sentimentCtx = document.getElementById('sentimentChart').getContext('2d');
+    const sentimentChart = new Chart(sentimentCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Upvotes', 'Downvotes'],
+            datasets: [{
+                data: [analyticsData.upvotes, analyticsData.downvotes],
+                backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { 
+                    position: 'top' 
+                },
+                tooltip: { 
+                    enabled: true 
+                },
+                title: {
+                    display: true,
+                    text: 'Vote Distribution'
+                }
+            }
+        }
+    });
+
+    // Time Spent per Interaction (Total Time Spent vs. View Count)
+    const timeSpentCtx = document.getElementById('timeSpentChart').getContext('2d');
+    const timeSpentChart = new Chart(timeSpentCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Total time spent', 'View count'],
+            datasets: [{
+                label: 'Content',
+                data: [analyticsData.total_time_spent, analyticsData.view_count],
+                backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+                borderColor: ['rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Total time spent vs View count'
+                }
+            }
+        }
+    });
+
+    //user engagement scatter plot 
+    if(analyticsData.user_engagement.length > 0) {
+        const scatterCtx = document.getElementById('engagementScatterChart').getContext('2d');
+        new Chart(scatterCtx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'User Engagement (Engagement Rate vs View Count)',
+                    data: analyticsData.user_engagement,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        title: {
+                            display: true,
+                            text: 'View Count'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Engagement Rate (%)'
+                        }
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.raw.label || '';
+                                return `${label}: View Count = ${context.raw.x}, Engagement Rate = ${context.raw.y}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+
+{% endblock %}

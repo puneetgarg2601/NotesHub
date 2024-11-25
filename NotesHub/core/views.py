@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import *
 from .models import Activities, Bookmark
 from .storage_db import *
-from .utils import *
+from .utils.util import *
 import os
 import json
 
@@ -220,66 +220,53 @@ def analyticsView(request, type, id):
     }
 
     if type == 'note':
-        # note = get_object_or_404(Notes, id=int(id))
+        note = get_object_or_404(Notes, id=int(id))
 
-        # engagement_rate = (note.upvotes + note.bookmark_count) / note.view_count * 100
-        # upvote_ratio = note.upvotes / (note.upvotes + note.downvotes)
-        # avg_time_per_view = note.total_time_spent / note.view_count
+        engagement_rate = getEngagementRate(note)
+        upvote_ratio = getUpvoteRatio(note)
+        avg_time_per_view = getAvgTimePerView(note)
 
         data['title'] = 'Notes Analytics'
-        # data['view_count'] = note.view_count
-        # data['total_time_spent'] = note.total_time_spent
-        # data['downloaded_times'] = note.downloaded_times
-        # data['upvotes'] = note.upvotes
-        # data['downvotes'] = note.downvotes
-        # data['bookmark_count'] = note.bookmark_count
-        # data['engagement_rate'] = engagement_rate
-        # data['upvote_ratio'] = upvote_ratio
-        # data['avg_time_per_view'] = avg_time_per_view
+        data['view_count'] = note.view_count
+        data['total_time_spent'] = note.total_time_spent
+        data['downloaded_times'] = note.downloaded_times
+        data['upvotes'] = note.upvotes
+        data['downvotes'] = note.downvotes
+        data['bookmark_count'] = note.bookmark_count
+        data['engagement_rate'] = engagement_rate
+        data['upvote_ratio'] = upvote_ratio
+        data['avg_time_per_view'] = avg_time_per_view
 
     elif type == 'user':
 
         user = request.user
-        #TODO: group by date also for better analytics
-        # notes = Notes.objects.filter(user=user).order_by('created_at').values()
+        
+        notes = Notes.objects.filter(user=user).order_by('created_at').values()
         
         data['title'] = 'User Analytics'
-        # data['view_count'] = notes.aaggregate(Sum('view_count'))
-        # data['total_time_spent'] = notes.aaggregate(Sum('total_time_spent'))
-        # data['downloaded_times'] = notes.aaggregate(Sum('downloaded_times'))
-        # data['upvotes'] = notes.aaggregate(Sum('upvotes'))
-        # data['downvotes'] = notes.aaggregate(Sum('downvotes'))
-        # data['bookmark_count'] = notes.aaggregate(Sum('bookmark_count'))
+        
 
-        # engagement_rate = (data['upvotes'] + data['bookmark_count']) / data['view_count'] * 100
-        # upvote_ratio = data['upvotes'] / (data['upvotes'] + data['downvotes'] + 1) # +1 to handle divide by zero exception
-        # avg_time_per_view = data['total_time_spent'] / data['view_count']
+        for note in notes:
+            data['view_count'] += note.view_count
+            data['total_time_spent'] += note.total_time_spent
+            data['downloaded_times'] += note.downloaded_times
+            data['upvotes'] += note.upvotes
+            data['downvotes'] = note.downvotes
+            data['bookmark_count'] = note.bookmark_count
 
-        # data['engagement_rate'] = engagement_rate
-        # data['upvote_ratio'] = upvote_ratio
-        # data['avg_time_per_view'] = avg_time_per_view
+            data['user_engagement'].append({
+                'label': note.created_at.strftime('%Y-%m-%d'),
+                'x': note.view_count,
+                'y': getEngagementRate(note)
+            })
 
-        # for note in notes:
-        #     data['view_count'] += note.view_count
-        #     data['total_time_spent'] += note.total_time_spent
-        #     data['downloaded_times'] += note.downloaded_times
-        #     data['upvotes'] += note.upvotes
-        #     data['downvotes'] = note.downvotes
-        #     data['bookmark_count'] = note.bookmark_count
-
-        #     data['user_engagement'].append({
-        #         'label': note.created_at.strftime('%Y-%m-%d'),
-        #         'x': note.view_count,
-        #         'y': getEngagementRate(note)
-        #     })
-
-        #     data['user_time_view'].append({
-        #         'labels': note.created_at.strftime('%Y-%m-%d'),
-        #         'data': getAvgTimePerView(note)
-        #     })
-        # data['engagement_rate'] = (data['upvotes'] + data['bookmark_count']) / data['view_count'] * 100 if data['view_count'] > 0 else 0
-        # data['upvote_ratio'] = data['upvotes'] / (data['upvotes'] + data['downvotes']) if data['upvotes'] + data['downvotes'] > 0 else 0
-        # data['avg_time_per_view'] = data['total_time_spent'] / data['view_count']
+            data['user_time_view'].append({
+                'labels': note.created_at.strftime('%Y-%m-%d'),
+                'data': getAvgTimePerView(note)
+            })
+        data['engagement_rate'] = (data['upvotes'] + data['bookmark_count']) / data['view_count'] * 100 if data['view_count'] > 0 else 0
+        data['upvote_ratio'] = data['upvotes'] / (data['upvotes'] + data['downvotes']) if data['upvotes'] + data['downvotes'] > 0 else 0
+        data['avg_time_per_view'] = data['total_time_spent'] / data['view_count']
 
 
     return render(request, 'analytics.html', {'data': data})

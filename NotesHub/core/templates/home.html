@@ -6,37 +6,92 @@
     <div class="container d-flex flex-column align-items-center" style="width: 80%; margin-top: 20px;">
         <!-- First Row: Website Name and Description -->
         <div class="text-center mb-4">
-          <h1>NotesHub</h1>
-          <p>A digital platform designed for seamless note-taking, helping users organize, access, and manage their notes in one place.</p>
+            <h1>NotesHub</h1>
+            <p>A digital platform designed for seamless note-taking, helping users organize, access, and manage their
+                notes in one place.</p>
         </div>
 
         <!-- Search Input Group -->
         <div class="input-group mb-4">
             <div class="form-outline">
-              <input id="search-focus" type="search" class="form-control" placeholder="Search course..." />
+                <input id="search-focus" type="search" class="form-control" placeholder="Search course..." onkeyup="searchCourses()"/>
             </div>
             <button type="submit" class="btn btn-primary">
-              <i class="fas fa-search"></i>
+                <i class="fas fa-search"></i>
             </button>
         </div>
 
         <!-- Second Row Onwards: Bootstrap Cards -->
-        <div class="row row-cols-2 row-cols-sm-4 row-cols-md-4 g-3" style="width: 100%;">
-          <!-- Example Card -->
-          <div class="col mb-4">
-            <div class="card d-flex flex-column" style="height: 300px;">
-              <a href="#" class="text-decoration-none">
-                <img src="{% static 'images/notes.png' %}" class="card-img-top" alt="Course Thumbnail" style="cursor: pointer; height: 180px; object-fit: cover;" />
-              </a>
-              <div class="overlay"></div>
-              <div class="card-body d-flex flex-column flex-grow-1">
-                <a href="#" class="text-decoration-none">
-                  <h5 class="card-title text-center" style="cursor: pointer;">Algorithms</h5>
-                </a>
-              </div>
+        <div id="course-list" class="row row-cols-2 row-cols-sm-4 row-cols-md-4 g-3" style="width: 100%;">
+            <!-- Example Card -->
+            {% for course in courses %}
+            <div class="col mb-4 course-item">
+                <div class="card d-flex flex-column" style="height: 300px;">
+                    <a href="{% url 'course_notes' course.course_code %}" class="text-decoration-none">
+                        <img src="{% static 'images/notes.png' %}" class="card-img-top" alt="Course Thumbnail"
+                            style="cursor: pointer; height: 180px; object-fit: cover;" />
+                    </a>
+                    <div class="overlay"></div>
+                    <div class="card-body d-flex flex-column flex-grow-1">
+                        <a href="{% url 'course_notes' course.course_code %}" class="text-decoration-none">
+                            <h5 class="card-title text-center" style="cursor: pointer;">{{ course.course_code }}: {{ course.short_name }}</h5>
+                        </a>
+                    </div>
+                </div>
             </div>
-          </div>
+            {% endfor %}
         </div>
-      </div>
+    </div>
 </div>
+
+<!-- <script>
+    function searchCourses() {
+        var query = document.getElementById("search-focus").value.toLowerCase();
+        var courseItems = document.querySelectorAll(".course-item");
+        
+        courseItems.forEach(function(course) {
+            var courseName = course.querySelector(".card-title").textContent.toLowerCase();
+            var courseDescription = course.querySelector(".card-description") ? course.querySelector(".card-description").textContent.toLowerCase() : '';
+            
+            if (courseName.includes(query) || courseDescription.includes(query)) {
+                course.style.display = "block";
+            } else {
+                course.style.display = "none";
+            }
+        });
+    }
+</script> -->
+<script>
+    function searchCourses() {
+        var query = document.getElementById("search-focus").value;
+        
+        // Make an AJAX request to fetch filtered courses
+        fetch("{% url 'search_courses' %}?query=" + query)
+            .then(response => response.json())
+            .then(data => {
+                var courseList = document.getElementById("course-list");
+                courseList.innerHTML = "";
+                
+                data.courses.forEach(function(course) {
+                    var courseNotesUrl = "/course/" + course.course_code + "/notes/";
+                    var courseCard = `
+                    <div class="col mb-4 course-item">
+                        <div class="card d-flex flex-column" style="height: 300px;">
+                            <a href="${courseNotesUrl}" class="text-decoration-none">
+                                <img src="{% static 'images/notes.png' %}" class="card-img-top" alt="Course Thumbnail" style="cursor: pointer; height: 180px; object-fit: cover;" />
+                            </a>
+                            <div class="overlay"></div>
+                            <div class="card-body d-flex flex-column flex-grow-1">
+                                <a href="${courseNotesUrl}" class="text-decoration-none">
+                                    <h5 class="card-title text-center" style="cursor: pointer;">${ course.course_code }: ${ course.short_name }</h5>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    courseList.innerHTML += courseCard;
+                });
+            });
+    }
+</script>
 {% endblock %}

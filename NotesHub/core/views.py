@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -7,8 +8,22 @@ from .forms import *
 from .utils import *
 import os
 
+@login_required(login_url='login')
 def index(request):
-    return render(request, 'home.html')
+    query = request.GET.get('query', '')
+    if query:
+        courses = Course.objects.filter(
+            course_name__icontains=query) | Course.objects.filter(
+            description__icontains=query)
+    else:
+        courses = Course.objects.all()
+    
+    return render(request, 'home.html', {'courses': courses})
+# def index(request):    
+#     courses = Course.objects.all()
+
+#     # Pass courses to the template context
+#     return render(request, 'home.html', {'courses': courses})
 
 def registerView(request):
     if request.method == 'POST':
@@ -63,6 +78,7 @@ def logoutView(request):
     logout(request)
     messages.success(request, "Logged out successfully.")
     return redirect('login')
+    
 
 @login_required(login_url='login')
 def createNoteView(request):
@@ -112,3 +128,52 @@ def createNoteView(request):
 
     return render(request, 'create_note.html', {'form': form})
 
+
+@login_required(login_url='login')
+def notesView(request, course_code):
+    # Fetch the course using the course_code from the URL
+    course = get_object_or_404(Course, course_code=course_code)
+    
+    # Fetch all notes related to the course
+    notes = Notes.objects.filter(course=course)
+    
+    # Pass the course and its notes to the template context
+    # return render(request, 'course_notes.html', {'course': course, 'notes': notes})
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and 'query' in request.GET:
+        query = request.GET.get('query', '').strip()
+        # Filter notes based on title or description containing the search term
+        filtered_notes = notes.filter(
+            title__icontains=query
+        ) | notes.filter(description__icontains=query)
+        
+        # Serialize the filtered notes for the response
+        notes_data = list(filtered_notes.values('id', 'title', 'description', 'user__username', 'thumbnail_url'))
+        return JsonResponse({'notes': notes_data})
+    
+    # Pass the course and its notes to the template context for initial load
+    return render(request, 'course_notes.html', {'course': course, 'notes': notes})
+
+
+@login_required(login_url='login')
+def search_courses(request):
+    query = request.GET.get('query', '')
+    if query:
+        courses = Course.objects.filter(
+            course_name__icontains=query) | Course.objects.filter(
+            description__icontains=query)
+    else:
+        courses = Course.objects.all()
+
+    # Serialize courses to return as JSON
+    courses_data = [
+        {
+            'course_code': course.course_code,
+            'short_name': course.short_name,
+            'course_name': course.course_name,
+            'thumbnail_url': '/static/images/notes.png',  # Add a real thumbnail URL
+        }
+        for course in courses
+    ]
+    
+    return JsonResponse({'courses': courses_data})

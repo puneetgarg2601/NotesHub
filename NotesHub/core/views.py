@@ -370,6 +370,31 @@ def toggle_dislike(request, note_id):
     return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
 # AJAX view to handle bookmark toggle and update bookmark model
+# @csrf_exempt
+# def toggle_bookmark(request, note_id):
+#     note = get_object_or_404(Notes, id=note_id)
+#     user = request.user
+    
+#     # Check if the user has already interacted with this note
+#     activity, created = Activities.objects.get_or_create(user=user, note=note)
+    
+#     if request.method == 'POST':
+#         data = json.loads(request.body)
+#         is_bookmarked = data.get('is_bookmarked')
+        
+#         # Update the bookmark status
+#         if is_bookmarked:
+#             activity.bookmark()  # Set bookmarked to 1
+#             Bookmark.objects.get_or_create(user=user, notes=note)  # Add to the Bookmark model
+#         else:
+#             activity.unbookmark()  # Set bookmarked to 0
+#             Bookmark.objects.filter(user=user, notes=note).delete()  # Remove from Bookmark model
+        
+#         return JsonResponse({
+#             'success': True,
+#             'bookmarked': activity.bookmarked  # Return the current bookmark status for the user
+#         })
+
 @csrf_exempt
 def toggle_bookmark(request, note_id):
     note = get_object_or_404(Notes, id=note_id)
@@ -385,11 +410,14 @@ def toggle_bookmark(request, note_id):
         # Update the bookmark status
         if is_bookmarked:
             activity.bookmark()  # Set bookmarked to 1
-            Bookmark.objects.get_or_create(user=user, notes=note)  # Add to the Bookmark model
+            # Create the bookmark if it doesn't exist
+            Bookmark.objects.get_or_create(user=user, notes=note)
         else:
             activity.unbookmark()  # Set bookmarked to 0
-            Bookmark.objects.filter(user=user, notes=note).delete()  # Remove from Bookmark model
+            # Remove the bookmark entry from the Bookmark model
+            Bookmark.objects.filter(user=user, notes=note).delete()
         
+        # Return the current bookmark status for the user
         return JsonResponse({
             'success': True,
             'bookmarked': activity.bookmarked  # Return the current bookmark status for the user

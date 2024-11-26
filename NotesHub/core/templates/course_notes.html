@@ -30,6 +30,7 @@
         <!-- Notes Display Area -->
         <div id="notes-container" class="row row-cols-2 row-cols-sm-4 row-cols-md-4 g-3" style="width: 100%;">
             {% for note in notes %}
+            
             <div class="col mb-4">
                 <div class="card d-flex flex-column" style="height: 300px;">
                     <a href="{% url 'note_detail' note.id %}" class="text-decoration-none">
@@ -42,10 +43,42 @@
                         <p class="lead small">Added by {{ note.user.username }}</p>
                     </div>
                     <div class="d-flex justify-content-around mt-auto">
-                      <img id="like-icon" src="{% static 'images/like.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this, {{ note.id }})">
-                      <!-- <img src="like_filled.svg" alt="like_filled" width="24px" height="24px" style="cursor: pointer;"> -->
+                        <div class="like">
+                            {% if note.activity and note.activity.liked == 1 %}
+                                <img id="like-icon-{{ note.id }}" 
+                                    src="{% static 'images/like_filled.svg' %}" 
+                                    alt="like" 
+                                    width="24px" height="24px" 
+                                    style="cursor: pointer;" 
+                                    onclick="toggleLike({{ note.id }})">
+                            {% else %}
+                                <img id="like-icon-{{ note.id }}" 
+                                    src="{% static 'images/like.svg' %}" 
+                                    alt="like" 
+                                    width="24px" height="24px" 
+                                    style="cursor: pointer;" 
+                                    onclick="toggleLike({{ note.id }})">
+                            {% endif %}
+                            <span class="ms-2 me2" id="like-count-{{ note.id }}">{{ note.upvotes }}</span> <!-- Like count -->
+                        </div>
 
-                  <img id="bookmark-icon" src="{% static 'images/bookmark.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this, {{ note.id }})">    
+                 
+                    {% if note.activity and note.activity.bookmarked == 1 %}
+                        <img id="bookmark-icon-{{ note.id }}" 
+                            src="{% static 'images/bookmark_filled.svg' %}" 
+                            alt="bookmark" 
+                            width="24px" height="24px" 
+                            style="cursor: pointer;" 
+                            onclick="toggleBookmark({{ note.id }})">
+                    {% else %}
+                        <img id="bookmark-icon-{{ note.id }}" 
+                            src="{% static 'images/bookmark.svg' %}" 
+                            alt="bookmark" 
+                            width="24px" height="24px" 
+                            style="cursor: pointer;" 
+                            onclick="toggleBookmark({{ note.id }})">
+                    {% endif %}
+                    
                     </div>
                 </div>
             </div>
@@ -57,28 +90,65 @@
 </div>
 
 <script>
-function toggle(imageElement, noteid) {
-    console.log(noteid)
-    // Get the current image source
-    const currentSrc = imageElement.src;
+function toggleLike(noteId) {
+    const likeIcon = document.getElementById(`like-icon-${noteId}`);
+    const likeCountElement = document.getElementById(`like-count-${noteId}`);
+    const currentSrc = likeIcon.src;
 
-    // Define the mapping of image sources for toggling
-    const imageToggleMap = {
-        'like.svg': 'like_filled.svg',
-        'like_filled.svg': 'like.svg',
-        'bookmark.svg': 'bookmark_filled.svg',
-        'bookmark_filled.svg': 'bookmark.svg'
-    };
+    const isLiked = currentSrc.includes('like_filled.svg');  // Check if already liked
 
-    // Extract the file name from the src attribute
-    const imageName = currentSrc.substring(currentSrc.lastIndexOf('/') + 1);
-
-    // Toggle the src if the image name exists in the map
-    if (imageToggleMap[imageName]) {
-        imageElement.src = currentSrc.replace(imageName, imageToggleMap[imageName]);
-    }
+    // Send request to toggle like state
+    fetch(`/toggle_like/${noteId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'is_liked': !isLiked  // Toggle the like state
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update like icon and like count based on the response
+            likeIcon.src = data.is_liked
+                ? "{% static 'images/like_filled.svg' %}" 
+                : "{% static 'images/like.svg' %}";
+            likeCountElement.textContent = data.new_like_count;  // Update the like count
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
+function toggleBookmark(noteId) {
+    const bookmarkIcon = document.getElementById(`bookmark-icon-${noteId}`);
+    const currentSrc = bookmarkIcon.src;
+    
+    const isBookmarked = currentSrc.includes('bookmark_filled.svg');
+
+    // Send request to toggle bookmark state
+    fetch(`/toggle_bookmark/${noteId}/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'is_bookmarked': !isBookmarked  // Toggle the bookmark state
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update bookmark icon based on the response
+            bookmarkIcon.src = data.is_bookmarked
+                ? "{% static 'images/bookmark_filled.svg' %}"
+                : "{% static 'images/bookmark.svg' %}";
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
 
 function searchNotes() {
     const query = document.getElementById('note-search').value;

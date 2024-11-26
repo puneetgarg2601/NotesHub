@@ -125,7 +125,7 @@ def createNoteView(request):
             
             note.save()
 
-            messages.success(request, "Note created successfully.")
+            # messages.success(request, "Note created successfully.")
             return redirect('index')
         else:
             messages.error(request, "Please correct the errors below.")

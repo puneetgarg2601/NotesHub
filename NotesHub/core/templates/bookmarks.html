@@ -9,7 +9,7 @@
             <h1>My Bookmarks</h1>
         </div>
         
-        <!-- Search Input Group -->
+        <!-- Search Input Group
         <div class="row d-flex justify-content-center">
             <div class="input-group mb-4" style="margin:auto">
                 <div class="form-outline">
@@ -19,7 +19,7 @@
                     <i class="bi bi-search"></i>
                 </button>
             </div>
-        </div>
+        </div> -->
 
 
 
@@ -103,50 +103,50 @@ function toggleLike(noteId) {
 }
 
 
-function searchNotes() {
-    const query = document.getElementById('note-search').value;
+// function searchNotes() {
+//     const query = document.getElementById('note-search').value;
 
-    fetch("{% url 'bookmark' %}?query=" + query, {
-        method: 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        const notesContainer = document.getElementById('notes-container');
-        notesContainer.innerHTML = '';  // Clear existing notes
+//     fetch("{% url 'bookmark' %}?query=" + query, {
+//         method: 'GET',
+//         headers: {
+//             'X-Requested-With': 'XMLHttpRequest',
+//         }
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         const notesContainer = document.getElementById('notes-container');
+//         notesContainer.innerHTML = '';  // Clear existing notes
 
-        if (data.notes.length === 0) {
-            notesContainer.innerHTML = '<p>No notes found.</p>';
-            return;
-        }
+//         if (data.notes.length === 0) {
+//             notesContainer.innerHTML = '<p>No notes found.</p>';
+//             return;
+//         }
 
-        data.notes.forEach(note => {
-            const noteCard = `
-                <div class="col mb-4">
-                    <div class="card d-flex flex-column" style="height: 300px;">
-                        <a href="#" class="text-decoration-none">
-                            <img src="${note.thumbnail_url}" class="card-img-top" alt="Note Thumbnail" style="cursor: pointer; height: 180px; object-fit: cover;">
-                        </a>
-                        <div class="card-body d-flex flex-column flex-grow-1">
-                            <a href="#" class="text-decoration-none">
-                                <h5 class="card-title" style="cursor: pointer;">${note.title}</h5>
-                            </a>
-                            <p class="lead small">Added by ${note.user__username}</p>
-                        </div>
-                        <div class="d-flex justify-content-around mt-auto">
-                            <img id="like-icon" src="{% static 'images/like.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">
-                            <!-- <img src="like_filled.svg" alt="like_filled" width="24px" height="24px" style="cursor: pointer;"> -->
+//         data.notes.forEach(note => {
+//             const noteCard = `
+//                 <div class="col mb-4">
+//                     <div class="card d-flex flex-column" style="height: 300px;">
+//                         <a href="#" class="text-decoration-none">
+//                             <img src="${note.thumbnail_url}" class="card-img-top" alt="Note Thumbnail" style="cursor: pointer; height: 180px; object-fit: cover;">
+//                         </a>
+//                         <div class="card-body d-flex flex-column flex-grow-1">
+//                             <a href="#" class="text-decoration-none">
+//                                 <h5 class="card-title" style="cursor: pointer;">${note.title}</h5>
+//                             </a>
+//                             <p class="lead small">Added by ${note.user__username}</p>
+//                         </div>
+//                         <div class="d-flex justify-content-around mt-auto">
+//                             <img id="like-icon" src="{% static 'images/like.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">
+//                             <!-- <img src="like_filled.svg" alt="like_filled" width="24px" height="24px" style="cursor: pointer;"> -->
 
-                            <img id="bookmark-icon" src="{% static 'images/bookmark.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">    
-                        </div>
-                    </div>
-                </div>`;
-            notesContainer.insertAdjacentHTML('beforeend', noteCard);
-        });
-    })
-    .catch(error => console.error('Error:', error));
-}
+//                             <img id="bookmark-icon" src="{% static 'images/bookmark.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">    
+//                         </div>
+//                     </div>
+//                 </div>`;
+//             notesContainer.insertAdjacentHTML('beforeend', noteCard);
+//         });
+//     })
+//     .catch(error => console.error('Error:', error));
+// }
 </script>
 {% endblock %}

@@ -49,7 +49,7 @@
 
         <!-- Buttons -->
         <div class="mt-4">
-            <a href="{{ note.download_url }}" class="btn btn-primary" target="_blank">Download Now</a>
+            <a href="{{ note.download_url }}" class="btn btn-primary" target="_blank"onclick="incrementDownloadCount(event)">Download Now</a>
             <a href="{% url 'analytics' 'note' note.id %}" class="btn btn-info ms-2">Analytics</a>
         </div>
         
@@ -210,6 +210,36 @@
         })
         .catch(error => console.error('Error:', error));
     }
+
+    function incrementDownloadCount(event) {
+    event.preventDefault();  // Prevent the default action (navigation)
+
+    const noteId = {{ note.id }}; // Get the note ID dynamically from Django context
+
+    // Send AJAX request to update download count
+    fetch("{% url 'increment_download_count' note.id %}", {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'note_id': noteId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Optionally, you can update the download count in the frontend here
+            console.log("Download count updated successfully!");
+            window.location.href = event.target.href;  // Proceed with the download
+        } else {
+            console.error("Failed to update download count");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+}
+
 </script>
 
 {% endblock %}

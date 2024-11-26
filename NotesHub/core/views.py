@@ -134,6 +134,16 @@ def createNoteView(request):
     return render(request, 'create_note.html', {'form': form})
 
 
+def increment_download_count(request, note_id):
+    if request.method == 'POST':
+        try:
+            note = Notes.objects.get(id=note_id)
+            note.downloaded_times += 1  # Increment the download count
+            note.save()  # Save the updated note
+            return JsonResponse({'success': True})
+        except Notes.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Note not found'})
+
 @login_required(login_url='login')
 def notesView(request, course_code):
     # Fetch the course using the course_code from the URL

@@ -13,13 +13,14 @@
         <div class="row d-flex justify-content-center">
             <div class="input-group mb-4" style="margin:auto">
                 <div class="form-outline">
-                    <input id="search-focus" type="search" class="form-control" placeholder="Search course..." onkeyup="searchCourses()"/>
+                    <input id="note-search" type="search" class="form-control" placeholder="Search Notes..." onkeyup="searchNotes()"/>
                 </div>
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-search"></i>
                 </button>
             </div>
         </div>
+
 
 
         <!-- Notes Display Area -->
@@ -96,7 +97,7 @@ function searchNotes() {
         data.notes.forEach(note => {
             const noteCard = `
                 <div class="col mb-4">
-                    <div class="card d-flex flex-column" style="height: 768px;">
+                    <div class="card d-flex flex-column" style="height: 300px;">
                         <a href="#" class="text-decoration-none">
                             <img src="${note.thumbnail_url}" class="card-img-top" alt="Note Thumbnail" style="cursor: pointer; height: 180px; object-fit: cover;">
                         </a>
@@ -107,15 +108,10 @@ function searchNotes() {
                             <p class="lead small">Added by ${note.user__username}</p>
                         </div>
                         <div class="d-flex justify-content-around mt-auto">
-                            <svg class="mt-1" onclick="toggleColor(this)" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="cursor: pointer;">
-                                <path d="M12 2L5 9h14L12 2z" fill="white" stroke="black" stroke-width="2"/>
-                            </svg>
-                            <svg class="margin-bottom" onclick="toggleColor(this)" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="cursor: pointer;">
-                                <path d="M12 22L5 15h14L12 22z" fill="white" stroke="black" stroke-width="2"/>
-                            </svg>
-                            <svg onclick="toggleColor(this)" width="24" height="24" viewBox="0 0 24 24" style="cursor: pointer;">
-                                <path d="M5 5h10v15l-5-2-5 2z" fill="white" stroke="black" stroke-width="2"></path>
-                            </svg>
+                            <img id="like-icon" src="{% static 'images/like.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">
+                            <!-- <img src="like_filled.svg" alt="like_filled" width="24px" height="24px" style="cursor: pointer;"> -->
+
+                            <img id="bookmark-icon" src="{% static 'images/bookmark.svg' %}" alt="like" width="24px" height="24px" style="cursor: pointer;" onclick="toggle(this)">    
                         </div>
                     </div>
                 </div>`;

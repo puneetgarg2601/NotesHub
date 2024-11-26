@@ -22,6 +22,7 @@
 
             <span id="like-count" class="ms-2 me-2">{{ note.upvotes }}</span> <!-- Like count -->
             
+
             <!-- Bookmark Section -->
             {% if activity and activity.bookmarked == 1 %}
                 <img id="bookmark-icon" src="{% static 'images/bookmark_filled.svg' %}" alt="bookmark" 
@@ -51,6 +52,23 @@
 </div>
 
 <script>
+    let startTime = new Date().getTime(); // Record page load time
+
+    function sendTimeSpent() {
+        const endTime = new Date().getTime(); // Record exit time
+        const timeSpent = Math.round((endTime - startTime) / 1000); // Time in seconds
+
+        const noteId = {{ note.id }}; // Pass the note ID from Django to JavaScript
+
+        // Send the time spent to Django using Fetch API
+        navigator.sendBeacon('/track-time/', JSON.stringify({
+            note_id: noteId,
+            time_spent: timeSpent
+        }));
+    }
+
+    // Trigger the function when the user leaves the page
+    window.addEventListener('beforeunload', sendTimeSpent);
     function toggleLike() {
         const likeIcon = document.getElementById('like-icon');
         const likeCountElement = document.getElementById('like-count');

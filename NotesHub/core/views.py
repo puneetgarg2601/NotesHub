@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404, get_object_or_404
 from django.contrib import messages
+from django.db.models import F
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -18,7 +19,9 @@ def index(request):
     if query:
         courses = Course.objects.filter(
             course_name__icontains=query) | Course.objects.filter(
-            description__icontains=query)
+            description__icontains=query) | Course.objects.filter(
+            short_name__icontains=query) | Course.objects.filter(
+            course_code__icontains=query)
     else:
         courses = Course.objects.all()
     
@@ -163,7 +166,9 @@ def search_courses(request):
     if query:
         courses = Course.objects.filter(
             course_name__icontains=query) | Course.objects.filter(
-            description__icontains=query)
+            description__icontains=query) | Course.objects.filter(
+            short_name__icontains=query) | Course.objects.filter(
+            course_code__icontains=query)
     else:
         courses = Course.objects.all()
 
@@ -275,7 +280,12 @@ def analyticsView(request, type, id):
 def note_detail(request, note_id):
     note = get_object_or_404(Notes, id=note_id)
     activity, created = Activities.objects.get_or_create(user=request.user, note=note)
-    print(activity.liked)
+    
+    # Increment the view_count of the note
+    Notes.objects.filter(id=note_id).update(view_count=F('view_count') + 1)
+    # Update the unique_view field
+    activity.unique_view = 1
+    activity.save()
 
     return render(request, 'note_detail.html', {'note': note, 'activity': activity})
 
@@ -294,10 +304,10 @@ def toggle_like(request, note_id):
         
         # Update the like status
         if is_liked:
-            activity.like()  # Set liked to 1
+            activity.toggle_like()  # Set liked to 1
             note.upvotes += 1  # Increment like count on the note
         else:
-            activity.dislike()  # Set liked to 0
+            activity.toggle_dislike()  # Set liked to 0
             note.upvotes -= 1  # Decrement like count on the note
         
         note.save()  # Save the updated note
@@ -306,6 +316,7 @@ def toggle_like(request, note_id):
             'new_like_count': note.upvotes,
             'liked': activity.liked  # Return the current like status for the user
         })
+ 
 
 # AJAX view to handle bookmark toggle and update bookmark model
 @csrf_exempt
@@ -332,3 +343,22 @@ def toggle_bookmark(request, note_id):
             'success': True,
             'bookmarked': activity.bookmarked  # Return the current bookmark status for the user
         })
+    
+@csrf_exempt
+def track_time_view(request):
+    if request.method == "POST":
+        import json
+        data = json.loads(request.body)
+
+        note_id = data.get("note_id")
+        time_spent = data.get("time_spent")
+
+        # Update the note's total time spent
+        note = Notes.objects.filter(id=note_id).first()
+        if note:
+            note.total_time_spent = (note.total_time_spent or 0) + time_spent
+            note.save()
+
+        return JsonResponse({"status": "success"})
+
+    return JsonResponse({"status": "error"}, status=400)

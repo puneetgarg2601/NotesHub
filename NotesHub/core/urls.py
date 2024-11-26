@@ -15,4 +15,5 @@ urlpatterns = [
     path('note/<int:note_id>/', views.note_detail, name='note_detail'),
     path('toggle_like/<int:note_id>/', views.toggle_like, name='toggle_like'),
     path('toggle_bookmark/<int:note_id>/', views.toggle_bookmark, name='toggle_bookmark'),
+    path('track-time/', views.track_time_view, name='track_time'),
 ]

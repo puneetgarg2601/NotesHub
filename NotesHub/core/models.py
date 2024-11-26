@@ -73,16 +73,32 @@ class Activities(models.Model):
     
     # Managing states as integers with choices
     liked = models.IntegerField(choices=[(0, 'Not Liked'), (1, 'Liked')], default=0)
+    disliked = models.IntegerField(choices=[(0, 'Not Disliked'), (1, 'Disliked')], default=0)
     bookmarked = models.IntegerField(choices=[(0, 'Not Bookmarked'), (1, 'Bookmarked')], default=0)
     unique_view = models.IntegerField(choices=[(0, 'Not Viewed'), (1, 'Viewed')], default=0)
     
     # You can create methods to handle these states
-    def like(self):
-        self.liked = 1
-        self.save()
+    # def like(self):
+    #     self.liked = 1
+    #     self.save()
     
-    def dislike(self):
-        self.liked = 0
+    # def dislike(self):
+    #     self.liked = 0
+    #     self.save()
+    def toggle_like(self):
+        if self.liked == 0:
+            self.liked = 1
+            self.disliked = 0  # Reset dislike
+        else:
+            self.liked = 0
+        self.save()
+
+    def toggle_dislike(self):
+        if self.disliked == 0:
+            self.disliked = 1
+            self.liked = 0  # Reset like
+        else:
+            self.disliked = 0
         self.save()
     
     def bookmark(self):

@@ -22,6 +22,15 @@
 
             <span id="like-count" class="ms-2 me-2">{{ note.upvotes }}</span> <!-- Like count -->
             
+            {% if activity and activity.disliked == 1 %}
+            <img id="dislike-icon" src="{% static 'images/dislike_filled.svg' %}" alt="dislike" 
+                width="24px" height="24px" style="cursor: pointer;" onclick="toggleDislike()">
+            {% else %}
+                <img id="dislike-icon" src="{% static 'images/dislike.svg' %}" alt="dislike" 
+                    width="24px" height="24px" style="cursor: pointer;" onclick="toggleDislike()">
+            {% endif %}
+
+            <span id="dislike-count" class="ms-2 me-2">{{ note.downvotes }}</span> <!-- Dislike count -->
 
             <!-- Bookmark Section -->
             {% if activity and activity.bookmarked == 1 %}
@@ -69,37 +78,109 @@
 
     // Trigger the function when the user leaves the page
     window.addEventListener('beforeunload', sendTimeSpent);
-    function toggleLike() {
-        const likeIcon = document.getElementById('like-icon');
-        const likeCountElement = document.getElementById('like-count');
-        const currentSrc = likeIcon.src;
+    // function toggleLike() {
+    //     const likeIcon = document.getElementById('like-icon');
+    //     const likeCountElement = document.getElementById('like-count');
+    //     const currentSrc = likeIcon.src;
         
-        const isLiked = currentSrc.includes('like_filled.svg');
+    //     const isLiked = currentSrc.includes('like_filled.svg');
 
-        fetch("{% url 'toggle_like' note.id %}", {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'is_liked': !isLiked
-            })
+    //     fetch("{% url 'toggle_like' note.id %}", {
+    //         method: 'POST',
+    //         headers: {
+    //             'X-CSRFToken': '{{ csrf_token }}',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             'is_liked': !isLiked
+    //         })
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         if (data.success) {
+    //             if (isLiked) {
+    //                 likeIcon.src = "{% static 'images/like.svg' %}";
+    //                 likeCountElement.textContent = data.new_like_count;
+    //             } else {
+    //                 likeIcon.src = "{% static 'images/like_filled.svg' %}";
+    //                 likeCountElement.textContent = data.new_like_count;
+    //             }
+    //         }
+    //     })
+    //     .catch(error => console.error('Error:', error));
+    // }
+
+    function toggleLike() {
+    const likeIcon = document.getElementById('like-icon');
+    const likeCountElement = document.getElementById('like-count');
+    const dislikeIcon = document.getElementById('dislike-icon');
+    const dislikeCountElement = document.getElementById('dislike-count');
+    const currentSrc = likeIcon.src;
+
+    const isLiked = currentSrc.includes('like_filled.svg');
+
+    fetch("{% url 'toggle_like' note.id %}", {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'is_liked': !isLiked
         })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                if (isLiked) {
-                    likeIcon.src = "{% static 'images/like.svg' %}";
-                    likeCountElement.textContent = data.new_like_count;
-                } else {
-                    likeIcon.src = "{% static 'images/like_filled.svg' %}";
-                    likeCountElement.textContent = data.new_like_count;
-                }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            likeIcon.src = data.is_liked
+                ? "{% static 'images/like_filled.svg' %}"
+                : "{% static 'images/like.svg' %}";
+            likeCountElement.textContent = data.new_like_count;
+
+            if (data.dislike_updated) {
+                dislikeIcon.src = "{% static 'images/dislike.svg' %}";
+                dislikeCountElement.textContent = data.new_dislike_count;
             }
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+    function toggleDislike() {
+    const dislikeIcon = document.getElementById('dislike-icon');
+    const dislikeCountElement = document.getElementById('dislike-count');
+    const likeIcon = document.getElementById('like-icon');
+    const likeCountElement = document.getElementById('like-count');
+    const currentSrc = dislikeIcon.src;
+
+    const isDisliked = currentSrc.includes('dislike_filled.svg');
+
+    fetch("{% url 'toggle_dislike' note.id %}", {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'is_disliked': !isDisliked
         })
-        .catch(error => console.error('Error:', error));
-    }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            dislikeIcon.src = data.is_disliked
+                ? "{% static 'images/dislike_filled.svg' %}"
+                : "{% static 'images/dislike.svg' %}";
+            dislikeCountElement.textContent = data.new_dislike_count;
+
+            if (data.like_updated) {
+                likeIcon.src = "{% static 'images/like.svg' %}";
+                likeCountElement.textContent = data.new_like_count;
+            }
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
 
     function toggleBookmark() {
         const bookmarkIcon = document.getElementById('bookmark-icon');

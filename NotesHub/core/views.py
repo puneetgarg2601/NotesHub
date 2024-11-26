@@ -292,31 +292,82 @@ def note_detail(request, note_id):
 # AJAX view to handle like toggle and update like count
 @csrf_exempt
 def toggle_like(request, note_id):
-    note = get_object_or_404(Notes, id=note_id)
-    user = request.user
-    
-    # Check if the user has already interacted with this note
-    activity, created = Activities.objects.get_or_create(user=user, note=note)
-    
-    if request.method == 'POST':
-        data = json.loads(request.body)
-        is_liked = data.get('is_liked')
-        
-        # Update the like status
-        if is_liked:
-            activity.toggle_like()  # Set liked to 1
-            note.upvotes += 1  # Increment like count on the note
-        else:
-            activity.toggle_dislike()  # Set liked to 0
-            note.upvotes -= 1  # Decrement like count on the note
-        
-        note.save()  # Save the updated note
-        return JsonResponse({
-            'success': True,
-            'new_like_count': note.upvotes,
-            'liked': activity.liked  # Return the current like status for the user
-        })
+    if request.method == "POST":
+        user = request.user
+        try:
+            note = Notes.objects.get(id=note_id)
+            activity, created = Activities.objects.get_or_create(user=user, note=note)
+
+            is_liked = activity.liked == 1
+            dislike_updated = False
+
+            # Toggle like
+            if is_liked:
+                activity.liked = 0
+                note.upvotes -= 1
+            else:
+                activity.liked = 1
+                note.upvotes += 1
+
+                # Reset dislike if previously disliked
+                if activity.disliked == 1:
+                    activity.disliked = 0
+                    note.downvotes -= 1
+                    dislike_updated = True
+
+            activity.save()
+            note.save()
+
+            return JsonResponse({
+                'success': True,
+                'is_liked': not is_liked,
+                'new_like_count': note.upvotes,
+                'new_dislike_count': note.downvotes,
+                'dislike_updated': dislike_updated
+            })
+        except Notes.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Note does not exist.'})
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
  
+
+@csrf_exempt
+def toggle_dislike(request, note_id):
+    if request.method == "POST":
+        user = request.user
+        try:
+            note = Notes.objects.get(id=note_id)
+            activity, created = Activities.objects.get_or_create(user=user, note=note)
+
+            is_disliked = activity.disliked == 1
+            like_updated = False
+
+            # Toggle dislike
+            if is_disliked:
+                activity.disliked = 0
+                note.downvotes -= 1
+            else:
+                activity.disliked = 1
+                note.downvotes += 1
+
+                # Reset like if previously liked
+                if activity.liked == 1:
+                    activity.liked = 0
+                    note.upvotes -= 1
+                    like_updated = True
+
+            activity.save()
+            note.save()
+
+            return JsonResponse({
+                'success': True,
+                'is_disliked': not is_disliked,
+                'new_dislike_count': note.downvotes,
+                'new_like_count': note.upvotes,
+                'like_updated': like_updated
+            })
+        except Notes.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Note does not exist.'})
+    return JsonResponse({'success': False, 'error': 'Invalid request method.'})
 
 # AJAX view to handle bookmark toggle and update bookmark model
 @csrf_exempt

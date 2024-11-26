@@ -282,9 +282,11 @@ def analyticsView(request, type, id):
                 'data': getAvgTimePerView(note)
             })
         data['engagement_rate'] = (data['upvotes'] + data['bookmark_count']) / data['view_count'] * 100 if data['view_count'] > 0 else 0
+        data['engagement_rate'] = f'{data['engagement_rate']:.3f}'[:-1]
         data['upvote_ratio'] = data['upvotes'] / (data['upvotes'] + data['downvotes']) if data['upvotes'] + data['downvotes'] > 0 else 0
+        data['upvote_ratio'] = f'{data['upvote_ratio']:.3f}'[:-1]
         data['avg_time_per_view'] = data['total_time_spent'] / data['view_count']
-
+        data['avg_time_per_view'] = f'{data['avg_time_per_view']:.3f}'[:-1]
 
     return render(request, 'analytics.html', {'data': data})
 
